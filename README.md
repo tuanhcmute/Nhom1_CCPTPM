@@ -1,5 +1,12 @@
 # Final Project: API Dashboard
-[![My Skills](https://skillicons.dev/icons?i=py,js,jquery,html,css,flask,github,postman,vscode,stackoverflow)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=py,js,jquery,html,css,flask,github,postman,vscode,stackoverflow)](https://skillicons.dev)\
+
+![GitHub labels](https://img.shields.io/github/labels/tuanhcmute/Nhom1_CCPTPM/documentation)
+![GitHub repo size](https://img.shields.io/github/repo-size/tuanhcmute/Nhom1_CCPTPM)
+![GitHub milestones](https://img.shields.io/github/milestones/open/tuanhcmute/Nhom1_CCPTPM)
+![GitHub milestone](https://img.shields.io/github/milestones/issues-open/tuanhcmute/Nhom1_CCPTPM/1)
+![GitHub repo file count](https://img.shields.io/github/directory-file-count/tuanhcmute/Nhom1_CCPTPM)
+
 
 ## Table of Contents
 1. [Members](#members)

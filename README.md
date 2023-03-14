@@ -1,4 +1,5 @@
 # Final Project: API Dashboard
+[![My Skills](https://skillicons.dev/icons?i=py,js,jquery,html,css,flask,github,postman,vscode,stackoverflow)](https://skillicons.dev)
 
 ## Table of Contents
 1. [Members](#members)

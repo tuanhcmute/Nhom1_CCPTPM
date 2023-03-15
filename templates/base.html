@@ -4,10 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/favicon.svg') }}"
+      type="image/x-icon"
+    />
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/lineicons/lineicons.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome/css/all.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
   {% block head %} {% endblock %}
-  {% block title %} {% endblock %}
+  <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
   <div id="app">
@@ -16,6 +23,7 @@
   <script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/fontawesome/js/all.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   {% block script %} {% endblock %} 
 </body>
 </html>

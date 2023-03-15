@@ -1,3 +1,4 @@
+from flask import request
 import requests
 import json
 
@@ -12,6 +13,17 @@ def getToken():
     'Content-Type': 'application/json'
   }
   response = requests.request("POST", url, headers=headers, data=payload)
-  print(json.loads(response.text))
   return json.loads(response.text)
+
+
+def refreshToken(response):
+  try:
+    token = request.cookies.get('access_token')
+    if token is None:
+        tokenDic = getToken()
+        accessToken, maxAge = tokenDic['access_token'], tokenDic['expires_in']
+        response.set_cookie('access_token', accessToken, max_age=10)
+    return response
+  except (RuntimeError, KeyError):
+    return response
 

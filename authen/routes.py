@@ -1,4 +1,4 @@
-from flask import render_template, request, make_response, redirect
+from flask import render_template, request, make_response, redirect, url_for
 from flask_login import login_user, logout_user, login_required
 
 from authen import bp
@@ -29,6 +29,7 @@ def loginPost():
     print(accessToken)
     # Set cookie
     response.set_cookie('access_token', accessToken, max_age=maxAge)
+    response.set_cookie('username', username)
     return response
   else:
     return 'Invalid username or password'
@@ -39,6 +40,7 @@ def loginPost():
 def logout():
   response = make_response(redirect('/auth/login'))
   response.delete_cookie('access_token')
+  response.delete_cookie('username')
   logout_user()
   return response
 

@@ -1,6 +1,5 @@
 import requests
 import json
-from getToken import getToken
 
 def getData(token):
   url = "http://cads-api.fpt.vn/fiber-detection/v2/using_json_inf/2022/12"

@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, request
 from flask_login import LoginManager
 
 from config import Config
 from extensions import db
 from model.user import User
+from vendor.getToken import getToken
 
 app = Flask(__name__)
 

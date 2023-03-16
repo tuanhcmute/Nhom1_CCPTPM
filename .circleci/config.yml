@@ -30,6 +30,7 @@ jobs:
           command: |
            sudo apt update && sudo apt install postgresql-client
            sudo apt install python-pytest
+           pip install Flask
             
       - run:
           name: Run tests

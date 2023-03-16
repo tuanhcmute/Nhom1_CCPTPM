@@ -28,8 +28,8 @@ jobs:
           # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3
           name: Database Setup
           command: |
-            sudo apt install postgresql postgresql-contrib
-            
+           sudo apt update && sudo apt install postgresql-client
+
             sudo systemctl start postgresql.service
 
             sudo -u postgres psql -p 5433 -c "create user ubuntu with password 'ubuntu';"

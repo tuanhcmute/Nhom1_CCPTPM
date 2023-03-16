@@ -28,8 +28,9 @@ jobs:
           # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3
           name: Database Setup
           command: |
+            sudo yum install postgresql-server
             sudo service postgresql stop
-            
+
             sudo service postgresql start
 
             sudo -u postgres psql -p 5433 -c "create user ubuntu with password 'ubuntu';"

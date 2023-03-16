@@ -13,7 +13,7 @@
 1. [Members](#members)
 2. [Overview](#overview)
 3. [How to run this project](#run-project)
-4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+4. [Contact](#contact)
 
 > ## Members :relaxed:: <a name="members"></a>
 
@@ -24,14 +24,68 @@
 
 1. **Technology**
 
-- Python 3.9
+- [Python 3.9](https://www.python.org/downloads/)
+- [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+- [PostgresQL](https://www.postgresql.org/docs/)
+- [ORM (Object relational mapping](https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/)
+- [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+- [Jquery](https://jquery.com/)
+
+2. **Structure project**
+ ```
+ .
+└── Nhom1_CCPTPM/
+    ├── authen/      ==> Login
+    │   ├── __init__.py
+    │   └── routes.py
+    ├── main/        ==> Dashboard
+    │   ├── __init__.py
+    │   └── routes.py
+    ├── model/      
+    │   └── user.py
+    ├── static/
+    │   ├── css/
+    │   │   └── css file
+    │   ├── js/
+    │   │   └── js fiel
+    │   ├── fonts/
+    │   │   └── font file
+    │   ├── images/
+    │   │   └── image file
+    │   └── vendor ==> download libary/
+    │       └── libary file
+    ├── templates/
+    │   ├── partials/
+    │   │   ├── header.html
+    │   │   ├── sidebar-nav.html
+    │   │   └── footer.html
+    │   ├── base.html
+    │   ├── index.html
+    │   └── login.html
+    ├── utils/
+    │   └── contants.py ==> define Constants
+    ├── vendor/
+    │   ├── getToken.py
+    │   └── getData.py
+    ├── .env
+    ├── .gitignore
+    ├── app.py    => Entry point
+    ├── config.py
+    ├── extensions.py
+    ├── README.md
+    └── requirements.txt
+ ```
 
 > ## How to run this project <a name="run-project"></a>
 
-1. Install python 3.9 (If you don't have)
+1. [Install python 3.9 (If you don't have)](https://www.python.org/downloads/)
 2. Clone project
-3. Run commands:\
-   3.1. Create virtual env
+```js
+git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
+```
+3. Run commands:
+> 
+3.1. Create virtual env
 
 ```js
 virtualenv ./vnev
@@ -52,7 +106,7 @@ pip install -r requirements.txt
 3.4. Load all config from .env file
 
 ```js
-source .env;
+source .env
 ```
 
 3.5. Run project with command. Sever running on http://localhost:50000
@@ -61,15 +115,17 @@ source .env;
 flask run
 ```
 
-3.6. Download postgresQL
+3.6. [Download postgresQL](https://www.postgresql.org/download/) and config username password in postgresQL
 
-3.7. From this project open other terminal run command:
+3.7. Open `.env` file in this project and change `DATABASE_URI=postgresql://<your_usernamw>:<your_password>@<your_host>:<your_port>/<your_database>"`
+
+3.8. From this project open other terminal run command:
 
 ```js
 flask shell
 ```
 
-3.8. Run command create table, create sample data
+3.9. Run command create table, create sample data
 
 ```js
 from extensions import db
@@ -78,3 +134,14 @@ user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()
 ```
+> ## Contact us <a name="contact"></a>
+If you have any question, please contact us through email: 
+```js
+20110743@student.hcmute.edu.vn
+```
+or 
+```js 
+20110202@student.hcmute.edu.vn
+```
+
+### Thanks for watching :relaxed::relaxed::relaxed::relaxed:

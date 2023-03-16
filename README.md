@@ -106,7 +106,7 @@ pip install -r requirements.txt
 3.4. Load all config from .env file
 
 ```js
-source .env;
+source .env
 ```
 
 3.5. Run project with command. Sever running on http://localhost:50000

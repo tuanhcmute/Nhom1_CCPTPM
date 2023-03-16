@@ -29,6 +29,7 @@ jobs:
           name: Database Setup
           command: |
            sudo apt update && sudo apt install postgresql-client
+           sudo apt install python-pytest
             
       - run:
           name: Run tests

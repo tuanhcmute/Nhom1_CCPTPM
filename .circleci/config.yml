@@ -30,12 +30,11 @@ jobs:
           command: |
            sudo apt update && sudo apt install postgresql-client
            sudo apt install python-pytest
-           python -m pip install flask
             
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: pytest
+          command: flask run
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

@@ -28,11 +28,9 @@ jobs:
           # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3
           name: Database Setup
           command: |
-            sudo apt-get install postgresql-14
             sudo service postgresql stop
-            sudo mv /usr/lib/postgresql-9.6/9.6 /usr/lib/postgresql/9.6
-            sudo mv /etc/postgresql-9.6/9.6 /etc/postgresql/9.6
-            sudo service postgresql start 9.6
+            
+            sudo service postgresql start
 
             sudo -u postgres psql -p 5433 -c "create user ubuntu with password 'ubuntu';"
             sudo -u postgres psql -p 5433 -c "alter user ubuntu with superuser;"

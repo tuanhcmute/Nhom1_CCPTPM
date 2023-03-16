@@ -13,7 +13,7 @@
 1. [Members](#members)
 2. [Overview](#overview)
 3. [How to run this project](#run-project)
-4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+4. [Contact](#contact)
 
 > ## Members :relaxed:: <a name="members"></a>
 
@@ -86,3 +86,14 @@ user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()
 ```
+> ## Contact us <a name="contact"></a>
+If you have any question, please contact us through email: 
+```js
+20110743@student.hcmute.edu.vn
+```
+or 
+```js 
+20110202@student.hcmute.edu.vn
+```
+
+### Thanks for watching :relaxed::relaxed::relaxed::relaxed:

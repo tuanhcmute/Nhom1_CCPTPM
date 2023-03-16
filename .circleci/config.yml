@@ -5,11 +5,11 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.10.2
-        environment:
-          TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
+        # environment:
+        #   TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
+        # auth:
+        #   username: mydockerhub-user
+        #   password: $DOCKERHUB_PASSWORD
        # Service container image
       - image: cimg/postgres:14.0
         environment:
@@ -21,15 +21,8 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client
+      - run:  sudo -u postgres psql -p 5432 -c "create database apiDashboard;"
       - run: whoami
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "CREATE TABLE test (name char(25));"
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "INSERT INTO test VALUES ('John'), ('Joanna'), ('Jennifer');"
       - python/install-packages:
           pkg-manager: pip
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.

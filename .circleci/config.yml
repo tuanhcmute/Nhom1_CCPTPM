@@ -28,7 +28,7 @@ jobs:
           # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3
           name: Database Setup
           command: |
-            sudo apt-get install postgres-9.6
+            sudo apt-get install postgresql-14
             sudo service postgresql stop
             sudo mv /usr/lib/postgresql-9.6/9.6 /usr/lib/postgresql/9.6
             sudo mv /etc/postgresql-9.6/9.6 /etc/postgresql/9.6

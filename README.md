@@ -25,8 +25,13 @@
 1. **Technology**
 
 - [Python 3.9](https://www.python.org/downloads/)
+- [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+- [PostgresQL](https://www.postgresql.org/docs/)
+- [ORM (Object relational mapping](https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/)
+- [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+- [Jquery](https://jquery.com/)
 
-2. Structure project
+2. **Structure project**
  ```
  .
 └── Nhom1_CCPTPM/

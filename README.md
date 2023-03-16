@@ -24,12 +24,18 @@
 
 1. **Technology**
 
-- Python 3.9
+- [Python 3.9](https://www.python.org/downloads/)
+
+2. Structure project
+
 
 > ## How to run this project <a name="run-project"></a>
 
-1. Install python 3.9 (If you don't have)
+1. [Install python 3.9 (If you don't have)](https://www.python.org/downloads/)
 2. Clone project
+```js
+git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
+```
 3. Run commands:\
    3.1. Create virtual env
 
@@ -61,15 +67,17 @@ source .env;
 flask run
 ```
 
-3.6. Download postgresQL
+3.6. [Download postgresQL](https://www.postgresql.org/download/) and config username password in postgresQL
 
-3.7. From this project open other terminal run command:
+3.7. Open `.env` file in this project and change `DATABASE_URI=postgresql://<your_usernamw>:<your_password>@<your_host>:<your_port>/<your_database>"`
+
+3.8. From this project open other terminal run command:
 
 ```js
 flask shell
 ```
 
-3.8. Run command create table, create sample data
+3.9. Run command create table, create sample data
 
 ```js
 from extensions import db

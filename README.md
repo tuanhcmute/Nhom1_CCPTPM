@@ -27,7 +27,49 @@
 - [Python 3.9](https://www.python.org/downloads/)
 
 2. Structure project
-
+ ```
+ .
+└── Nhom1_CCPTPM/
+    ├── authen/      ==> Login
+    │   ├── __init__.py
+    │   └── routes.py
+    ├── main/        ==> Dashboard
+    │   ├── __init__.py
+    │   └── routes.py
+    ├── model/      
+    │   └── user.py
+    ├── static/
+    │   ├── css/
+    │   │   └── css file
+    │   ├── js/
+    │   │   └── js fiel
+    │   ├── fonts/
+    │   │   └── font file
+    │   ├── images/
+    │   │   └── image file
+    │   └── vendor ==> download libary/
+    │       └── libary file
+    ├── templates/
+    │   ├── partials/
+    │   │   ├── header.html
+    │   │   ├── sidebar-nav.html
+    │   │   └── footer.html
+    │   ├── base.html
+    │   ├── index.html
+    │   └── login.html
+    ├── utils/
+    │   └── contants.py ==> define Constants
+    ├── vendor/
+    │   ├── getToken.py
+    │   └── getData.py
+    ├── .env
+    ├── .gitignore
+    ├── app.py    => Entry point
+    ├── config.py
+    ├── extensions.py
+    ├── README.md
+    └── requirements.txt
+ ```
 
 > ## How to run this project <a name="run-project"></a>
 

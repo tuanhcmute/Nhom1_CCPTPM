@@ -29,15 +29,6 @@ jobs:
           name: Database Setup
           command: |
            sudo apt update && sudo apt install postgresql-client
-
-            sudo service postgresql restart
-
-            sudo -u postgres psql -p 5433 -c "create user ubuntu with password 'ubuntu';"
-            sudo -u postgres psql -p 5433 -c "alter user ubuntu with superuser;"
-
-            sudo -u postgres psql -p 5433 -c "create database apiDashboard;"
-
-            sudo -u postgres psql -p 5433 -c "select * from apiDashboard;"
             
       - run:
           name: Run tests

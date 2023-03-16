@@ -2,4 +2,4 @@ from flask import Blueprint
 
 bp = Blueprint('authen', __name__)
 
-from authen import routes
+from app.authen import routes

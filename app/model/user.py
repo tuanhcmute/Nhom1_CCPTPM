@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from extensions import db
+from app.extensions import db
 
 class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)

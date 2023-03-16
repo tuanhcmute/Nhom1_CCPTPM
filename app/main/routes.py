@@ -1,10 +1,10 @@
 from flask import render_template, make_response, request
 from flask_login import  login_required
 
-from main import bp
-from utils.contants import Method
-from vendor.getToken import getToken
-from vendor.getData import getData
+from app.main import bp
+from app.utils.contants import Method
+from app.vendor.getToken import getToken
+from app.vendor.getData import getData
 
 @bp.after_request
 @login_required

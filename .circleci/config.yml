@@ -22,7 +22,7 @@ jobs:
           name: Install Python dependencies in a venv
           command: |
             virtualenv venv
-            venv/bin/activate
+            source venv/bin/activate
             python -m pip install -r requirements.txt
       - run:
           # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3

@@ -83,8 +83,9 @@
 ```js
 git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
 ```
-3. Run commands:\
-   3.1. Create virtual env
+3. Run commands:
+> 
+3.1. Create virtual env
 
 ```js
 virtualenv ./vnev

@@ -18,12 +18,8 @@ jobs:
       #     POSTGRES_PASSWORD: ""
     steps:
       - checkout
-      - run:
-          name: Install Python dependencies in a venv
-          command: |
-            virtualenv venv
-            source venv/bin/activate
-            python -m pip install -r requirements.txt
+      - python/install-packages:
+          pkg-manager: pip
       - run:
           # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3
           name: Database Setup

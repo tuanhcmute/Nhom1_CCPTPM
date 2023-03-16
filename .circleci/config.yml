@@ -30,7 +30,7 @@ jobs:
           command: |
            sudo apt update && sudo apt install postgresql-client
 
-            sudo systemctl start postgresql.service
+            sudo service postgresql restart
 
             sudo -u postgres psql -p 5433 -c "create user ubuntu with password 'ubuntu';"
             sudo -u postgres psql -p 5433 -c "alter user ubuntu with superuser;"

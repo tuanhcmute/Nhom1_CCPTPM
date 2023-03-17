@@ -5,11 +5,7 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.10.2
-<<<<<<< HEAD
-        # Service container image
-=======
-       # Service container image
->>>>>>> d940efdf1cededeef6283a32cd85a0bed27ed921
+      # Service container image
       # - image: cimg/postgres:14.0
       #   environment:
       #     POSTGRES_USER: root

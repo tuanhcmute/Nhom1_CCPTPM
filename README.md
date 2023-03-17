@@ -13,7 +13,8 @@
 1. [Members](#members)
 2. [Overview](#overview)
 3. [How to run this project](#run-project)
-4. [Contact](#contact)
+4. [Run test case](#run-test)
+5. [Contact](#contact)
 
 > ## Members :relaxed:: <a name="members"></a>
 
@@ -134,6 +135,8 @@ user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()
 ```
+> ## Run test case
+
 > ## Contact us <a name="contact"></a>
 If you have any question, please contact us through email: 
 ```js

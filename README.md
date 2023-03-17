@@ -132,6 +132,7 @@ flask shell
 ```js
 from app.extensions import db
 from app.model.user import User
+db.create_all()
 user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()

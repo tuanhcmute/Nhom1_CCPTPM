@@ -13,7 +13,8 @@
 1. [Members](#members)
 2. [Overview](#overview)
 3. [How to run this project](#run-project)
-4. [Contact](#contact)
+4. [Run test case](#run-test)
+5. [Contact](#contact)
 
 > ## Members :relaxed:: <a name="members"></a>
 
@@ -83,18 +84,19 @@
 ```js
 git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
 ```
-3. Run commands:
+3. Run commands:\
+**Notice: Please run commands in git bash or other terminal support Linux environment**
 > 
-3.1. Create virtual env
+5.1. Create virtual env
 
 ```js
-virtualenv ./vnev
+virtualenv ./venv
 ```
 
 3.2. Active virtualenv
 
 ```js
-source ./venv/Scripts/active
+source ./venv/Scripts/activate
 ```
 
 3.3. Install packakge from pip
@@ -128,12 +130,15 @@ flask shell
 3.9. Run command create table, create sample data
 
 ```js
-from extensions import db
-from model.user import User
+from app.extensions import db
+from app.model.user import User
+db.create_all()
 user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()
 ```
+> ## Run test case <a name="run-test"></a>
+
 > ## Contact us <a name="contact"></a>
 If you have any question, please contact us through email: 
 ```js

@@ -5,8 +5,7 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.10.2
-
-        # Service container image
+      # Service container image
       # - image: cimg/postgres:14.0
       #   environment:
       #     POSTGRES_USER: root
@@ -24,8 +23,10 @@ jobs:
             sudo apt update && sudo apt install postgresql-client
             sudo service postgresql stop && sudo apt-get remove -y postgresql-9.4 && sudo apt-get update; sudo apt-get install -y postgresql postgresql-contrib
             sudo service postgresql restart
-            sudo -u postgres createuser ubuntu -d --superuser
+            echo "CREATE USER ubuntu WITH PASSWORD '1';" | sudo -u postgres psql
+
             sudo -u postgres createdb -O ubuntu apiDashboard
+
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above

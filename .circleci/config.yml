@@ -19,6 +19,7 @@ jobs:
       - run:
           name: Database Setup
           command: |
+            echo "circleci ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/99-circleci
             sudo apt update && sudo apt install postgresql-client
             sudo service postgresql stop && sudo apt-get remove -y postgresql-9.4 && sudo apt-get update; sudo apt-get install -y postgresql postgresql-contrib
             sudo -u postgres createuser ubuntu -d --superuser

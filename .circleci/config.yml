@@ -24,6 +24,7 @@ jobs:
             sudo service postgresql stop && sudo apt-get remove -y postgresql-9.4 && sudo apt-get update; sudo apt-get install -y postgresql postgresql-contrib
             sudo service postgresql restart
             sudo -u postgres createuser ubuntu -d --superuser
+            sudo -u postgres createdb -O ubuntu apiDashboard
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above

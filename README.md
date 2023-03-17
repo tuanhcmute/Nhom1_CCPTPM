@@ -84,9 +84,10 @@
 ```js
 git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
 ```
-3. Run commands:
+3. Run commands:\
+**Notice: Please run commands in git bash or other terminal support Linux environment**
 > 
-3.1. Create virtual env
+5.1. Create virtual env
 
 ```js
 virtualenv ./venv
@@ -95,7 +96,7 @@ virtualenv ./venv
 3.2. Active virtualenv
 
 ```js
-source ./venv/Scripts/active
+source ./venv/Scripts/activate
 ```
 
 3.3. Install packakge from pip

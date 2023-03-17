@@ -5,12 +5,7 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.10.2
-        environment:
-          TEST_DATABASE_URL: postgresql://postgres@localhost/apiDashboard
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
-       # Service container image
+        # Service container image
       # - image: cimg/postgres:14.0
       #   environment:
       #     POSTGRES_USER: root
@@ -20,13 +15,16 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+
       - run:
-          # https://discuss.circleci.com/t/how-do-you-use-postgres-9-6-x-or-9-x-x/9855/3
           name: Database Setup
           command: |
-           sudo apt update && sudo apt install postgresql-client
-           sudo apt install python-pytest
-            
+            echo "circleci ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/99-circleci
+            sudo apt update && sudo apt install postgresql-client
+            sudo service postgresql stop && sudo apt-get remove -y postgresql-9.4 && sudo apt-get update; sudo apt-get install -y postgresql postgresql-contrib
+            sudo service postgresql restart
+            sudo -u postgres createuser ubuntu -d --superuser
+            sudo -u postgres createdb -O ubuntu apiDashboard
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above

@@ -130,8 +130,8 @@ flask shell
 3.9. Run command create table, create sample data
 
 ```js
-from extensions import db
-from model.user import User
+from app.extensions import db
+from app.model.user import User
 user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()

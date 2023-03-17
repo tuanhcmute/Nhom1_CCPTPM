@@ -135,7 +135,7 @@ user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()
 ```
-> ## Run test case
+> ## Run test case <a name="run-test"></a>
 
 > ## Contact us <a name="contact"></a>
 If you have any question, please contact us through email: 

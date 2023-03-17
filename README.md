@@ -89,7 +89,7 @@ git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
 3.1. Create virtual env
 
 ```js
-virtualenv ./vnev
+virtualenv ./venv
 ```
 
 3.2. Active virtualenv

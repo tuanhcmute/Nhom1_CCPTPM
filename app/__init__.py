@@ -22,9 +22,10 @@ def createApp():
   defaultConfig = Config()
   app.config.from_object(defaultConfig)
   
-  # Initialize Flask extensions here
+  # Initialize Flask extensions here if code block using testcases
   if app.config['SQLALCHEMY_DATABASE_URI'] is None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://ubuntu:@localhost:5432/apiDashboard"
+    # Do not change code below => If you change, can not merge code
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://ubuntu:1@localhost:5432/apiDashboard"
   db.init_app(app)
 
   return app

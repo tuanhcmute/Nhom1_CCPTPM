@@ -34,45 +34,53 @@
 
 2. **Structure project**
  ```
- .
 └── Nhom1_CCPTPM/
-    ├── authen/      ==> Login
+    ├── .circleci/
+    │   └── config.yml
+    ├── .github/
+    │   └── FUNDING.yml
+    ├── app/
+    │   ├── authen/
+    │   │   ├── __init__.py
+    │   │   └── routes.py
+    │   ├── main/
+    │   │   ├── __init__.py
+    │   │   └── routes.py
+    │   ├── model/
+    │   │   └── user.py
+    │   ├── static/
+    │   │   ├── css
+    │   │   ├── fonts
+    │   │   ├── image
+    │   │   ├── js
+    │   │   └── vendor
+    │   ├── templates/
+    │   │   ├── base.html
+    │   │   ├── data.html
+    │   │   ├── index.html
+    │   │   ├── login.html
+    │   │   └── partials/
+    │   │       ├── footer.html
+    │   │       ├── header.html
+    │   │       └── sidebar-nav.html
+    │   ├── utils/
+    │   │   └── contants.py
+    │   ├── vendor/
+    │   │   ├── getToken.py
+    │   │   └── getData.py
     │   ├── __init__.py
-    │   └── routes.py
-    ├── main/        ==> Dashboard
+    │   ├── app
+    │   ├── config.py
+    │   └── extensions.py
+    ├── test/
     │   ├── __init__.py
-    │   └── routes.py
-    ├── model/      
-    │   └── user.py
-    ├── static/
-    │   ├── css/
-    │   │   └── css file
-    │   ├── js/
-    │   │   └── js fiel
-    │   ├── fonts/
-    │   │   └── font file
-    │   ├── images/
-    │   │   └── image file
-    │   └── vendor ==> download libary/
-    │       └── libary file
-    ├── templates/
-    │   ├── partials/
-    │   │   ├── header.html
-    │   │   ├── sidebar-nav.html
-    │   │   └── footer.html
-    │   ├── base.html
-    │   ├── index.html
-    │   └── login.html
-    ├── utils/
-    │   └── contants.py ==> define Constants
-    ├── vendor/
-    │   ├── getToken.py
-    │   └── getData.py
+    │   ├── conftest.py
+    │   ├── auth/
+    │   │   └── test_login.py
+    │   └── main/
+    │       └── test_main.py
     ├── .env
     ├── .gitignore
-    ├── app.py    => Entry point
-    ├── config.py
-    ├── extensions.py
     ├── README.md
     └── requirements.txt
  ```
@@ -138,6 +146,14 @@ db.session.add(user)
 db.session.commit()
 ```
 > ## Run test case <a name="run-test"></a>
+1. Windows
+```
+pytest
+```
+2. Linux
+```
+python -m pytest
+```
 
 > ## Contact us <a name="contact"></a>
 If you have any question, please contact us through email: 

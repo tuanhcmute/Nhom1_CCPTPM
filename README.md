@@ -143,6 +143,11 @@ flask shell
 from app.extensions import db
 from app.model import *
 db.create_all()
+
+adminRole = Role('admin')
+userRole = Role('user')
+
+db.session.add_all([adminRole, userRole])
 user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()

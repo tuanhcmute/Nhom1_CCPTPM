@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}API Dashboard{% endblock %}
+
+
+{% block content %} 
+ <!-- ======== sidebar-nav start =========== -->
+    {% include 'partials/sidebar-nav.html' %}
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      {% include 'partials/header.html' %}
+      <!-- ========== header end ========== -->
+
+      <!-- ========== section start ========== -->
+       <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="titlemb-30">
+                  <h2>Profile Manage</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="/">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item"><a href="/profile">Profile Manage</a></li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card-style settings-card-1 mb-30">
+                <div
+                  class="
+                    title
+                    mb-30
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  "
+                >
+                  <h6>My Account</h6>
+                  <button class="border-0 bg-transparent">
+                    <i class="lni lni-pencil-alt"></i>
+                  </button>
+                </div>
+                <div class="profile-info">
+                  <div class="d-flex align-items-center mb-30">
+                    <div class="profile-image">
+                      <img src="{{ url_for('static', filename='images/profile/profile-image.png') }}"
+                       alt="" />
+                      <div class="update-image">
+                        <input type="file" />
+                        <label for=""
+                          ><i class="lni lni-cloud-upload"></i
+                        ></label>
+                      </div>
+                    </div>
+                    <div class="profile-meta">
+                      <h5 class="text-bold text-dark mb-10">John Doe</h5>
+                      <p class="text-sm text-gray">Admin</p>
+                    </div>
+                  </div>
+                  <div class="input-style-1">
+                    <label>Username</label>
+                    <input
+                      type="text"
+                      placeholder="admin"
+                      value="admin"
+                      disabled
+                    />
+                  </div>
+                  <div class="input-style-1">
+                    <label>Current password</label>
+                    <input type="password" value="admin@example.com" />
+                  </div>
+                  <div class="input-style-1">
+                    <label>Confirm password</label>
+                    <input type="password" value="admin@example.com" />
+                  </div>
+                   <div class="col-12">
+                      <button class="main-btn primary-btn btn-hover">
+                        Update Account
+                      </button>
+                    </div>
+                </div>
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+            <div class="col-lg-6">
+              <div class="card-style settings-card-2 mb-30">
+                <div class="title mb-30">
+                  <h6>My Profile</h6>
+                </div>
+                <form action="#">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Full Name" />
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>Age</label>
+                        <input type="number" placeholder="18" min="0" max="100"/>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>Address</label>
+                        <input type="text" placeholder="Address" />
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="main-btn primary-btn btn-hover">
+                        Update Profile
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+<!-- ========== footer start =========== -->
+{% include 'partials/footer.html' %}
+<!-- ========== footer end =========== -->
+</main>
+<!-- ======== main-wrapper end =========== -->
+{% endblock %} 

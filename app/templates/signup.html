@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Login - API Dashboard{% endblock %}
+{% block title %}SignUp - API Dashboard{% endblock %}
 
 {% block content %}
   <main class="container">
@@ -24,7 +24,7 @@
               <div class="auth-cover-wrapper bg-primary-100">
                 <div class="auth-cover">
                   <div class="title text-center">
-                    <h1 class="text-primary mb-10">Welcome Back</h1>
+                    <h1 class="text-primary mb-10">Get Started</h1>
                     <p class="text-medium">
                       Sign in to your Existing account to continue
                     </p>
@@ -42,7 +42,7 @@
             <div class="col-lg-6">
               <div class="signin-wrapper">
                 <div class="form-wrapper">
-                  <h2 class="mb-15">Login</h2>
+                  <h2 class="mb-15">SignUp</h2>
                   <p class="text-sm mb-25">
                     Start creating the best possible user experience for you
                     customers.
@@ -62,12 +62,24 @@
                           <input type="password" placeholder="Password" id="password" name="password"/>
                         </div>
                       </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Fullname</label>
+                          <input type="text" placeholder="Fullname" id="fullname" name="fullname"/>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Address</label>
+                          <input type="text" placeholder="Address" id="address" name="address"/>
+                        </div>
+                      </div>
                       <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                      <div class="col-xxl-6 col-lg-12 col-md-6 d-flex gap-3">
                         <div class="form-check checkbox-style mb-30">
                           <input
                             class="form-check-input"
-                            type="checkbox"
+                            type="radio"
                             value=""
                             id="checkbox-remember"
                           />
@@ -75,23 +87,26 @@
                             class="form-check-label"
                             for="checkbox-remember"
                           >
-                            Remember me next time</label
+                            Admin</label
+                          >
+                        </div>
+                        <div class="form-check checkbox-style mb-30">
+                          <input
+                            checked
+                            class="form-check-input"
+                            type="radio"
+                            value=""
+                            id="checkbox-remember"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="checkbox-remember"
+                          >
+                            Normal</label
                           >
                         </div>
                       </div>
                       <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
-                        <div
-                          class="
-                            text-start text-md-end text-lg-start text-xxl-end
-                            mb-30
-                          "
-                        >
-                          <a href="#0" class="hover-underline"
-                            >Forgot Password?</a
-                          >
-                        </div>
-                      </div>
                       <!-- end col -->
                       <div class="col-12">
                         <div
@@ -112,12 +127,12 @@
                             "
                             type="submit"
                           >
-                            Login
+                            SignUp
                           </button>
                           <div class="pt-40">
                             <p class="text-sm text-medium text-dark text-center">
-                              Don’t have any account yet?
-                              <a href="/auth/signup">Create an account</a>
+                              Already have an account?
+                              <a href="/auth/login">Login</a>
                             </p>
                           </div>
                           

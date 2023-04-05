@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Login - API Dashboard{% endblock %}
+{% block title %}WELCOME TO GROUP O1{% endblock %}
 
 {% block content %}
   <main class="container">
@@ -12,8 +12,26 @@
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title mb-30">
+                  <h2>Sign in</h2>
                 </div>
               </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper mb-30">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item"><a href="#0">Auth</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Sign in
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
             </div>
             <!-- end row -->
           </div>
@@ -42,7 +60,7 @@
             <div class="col-lg-6">
               <div class="signin-wrapper">
                 <div class="form-wrapper">
-                  <h2 class="mb-15">Login</h2>
+                  <h2 class="mb-15">Sign In Form</h2>
                   <p class="text-sm mb-25">
                     Start creating the best possible user experience for you
                     customers.
@@ -63,7 +81,51 @@
                         </div>
                       </div>
                       <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                      {% if 'message' in session %}
+                      <div class="col-12">
+                        <div class="alert alert-danger">{{ session['message'] }}</div>
+                      </div>
+                      {% endif %}
+                      <div class="col-13">
+                        <div class="input-style-1">
+                          <label>Role</label>
+                        </div>
+                          <input type="checkbox" id="user" name="user">
+                          <label for="user">User</label>
+                        
+                          <input type="checkbox" id="admin" name="admin">
+                          <label for="admin">Admin</label>
+                          <script>
+                            var userCheckbox = document.getElementById("user");
+                            var adminCheckbox = document.getElementById("admin");
+
+                            userCheckbox.addEventListener("change", function() {
+                              if (this.checked) {
+                                this.value = 1;
+                                console.log(this.value);
+                                console.log(typeof this.value);
+                                adminCheckbox.checked = false;
+                              } else{
+                                console.log(this.value);
+                                this.value = 0;
+                              }
+                            });
+
+                            adminCheckbox.addEventListener("change", function() {
+                              if (this.checked) {
+                                userCheckbox.checked = false;
+                                this.value = 2;
+                                console.log(this.value);
+                              }else{
+                                this.value = 0;
+                                console.log(this.value);
+                              }
+                            });
+                          </script>
+                      </div>
+
+
+                      <!-- <div class="col-xxl-6 col-lg-12 col-md-6">
                         <div class="form-check checkbox-style mb-30">
                           <input
                             class="form-check-input"
@@ -78,7 +140,7 @@
                             Remember me next time</label
                           >
                         </div>
-                      </div>
+                      </div> -->
                       <!-- end col -->
                       <div class="col-xxl-6 col-lg-12 col-md-6">
                         <div
@@ -112,15 +174,8 @@
                             "
                             type="submit"
                           >
-                            Login
+                            Sign In
                           </button>
-                          <div class="pt-40">
-                            <p class="text-sm text-medium text-dark text-center">
-                              Don’t have any account yet?
-                              <a href="/auth/signup">Create an account</a>
-                            </p>
-                          </div>
-                          
                         </div>
                       </div>
                     </div>

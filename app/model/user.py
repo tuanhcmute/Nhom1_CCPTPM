@@ -15,9 +15,23 @@ class User(db.Model, UserMixin):
   roleId = db.Column(db.Integer, db.ForeignKey(Role.id))
 
 
+  def __init__(self, username, password, age, fullname, address, isEnable, roleId):
+    self.username = username
+    self.password = password
+    self.age = age
+    self.fullname = fullname
+    self.address = address
+    self.isEnable = isEnable
+    self.roleId = roleId
+
   def __init__(self, username, password):
     self.username = username
     self.password = password
+
+  def __init__(self, username, password, roleId):
+    self.username = username
+    self.password = password
+    self.roleId = roleId
 
   def __repr__(self):
     return f'<User "{self.username}">'

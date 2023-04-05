@@ -33,7 +33,8 @@ def loginPost():
       session['message'] = error
       return redirect(request.referrer)
     if userDb and password == userDb.password:
-        user = User( username, password, role)
+        user = User(username, role, password)
+        print(user)
         user.id = userDb.id
         login_user(user)
 

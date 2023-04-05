@@ -46,7 +46,6 @@ def init_record():
 
   # Create admin account
   adminRoleDB = Role.query.filter_by(roleName='admin').first()
-  adminUser = User(username='admin', password='admin')
-  adminUser.roleId = adminRoleDB.id
+  adminUser = User(roleId=adminRoleDB.id,username='admin', password='admin', age=18,fullname='admin', address='Hanoi', isEnable=True)
   db.session.add_all([adminUser])
   db.session.commit()

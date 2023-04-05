@@ -33,69 +33,71 @@
 - [Jquery](https://jquery.com/)
 
 2. **Structure project**
- ```
+
+```
 └── Nhom1_CCPTPM/
-    ├── .circleci/
-    │   └── config.yml
-    ├── .github/
-    │   └── FUNDING.yml
-    ├── app/
-    │   ├── authen/
-    │   │   ├── __init__.py
-    │   │   └── routes.py
-    │   ├── main/
-    │   │   ├── __init__.py
-    │   │   └── routes.py
-    │   ├── model/
-    │   │   └── user.py
-    │   ├── static/
-    │   │   ├── css
-    │   │   ├── fonts
-    │   │   ├── image
-    │   │   ├── js
-    │   │   └── vendor
-    │   ├── templates/
-    │   │   ├── base.html
-    │   │   ├── data.html
-    │   │   ├── index.html
-    │   │   ├── login.html
-    │   │   └── partials/
-    │   │       ├── footer.html
-    │   │       ├── header.html
-    │   │       └── sidebar-nav.html
-    │   ├── utils/
-    │   │   └── contants.py
-    │   ├── vendor/
-    │   │   ├── getToken.py
-    │   │   └── getData.py
-    │   ├── __init__.py
-    │   ├── app
-    │   ├── config.py
-    │   └── extensions.py
-    ├── test/
-    │   ├── __init__.py
-    │   ├── conftest.py
-    │   ├── auth/
-    │   │   └── test_login.py
-    │   └── main/
-    │       └── test_main.py
-    ├── .env
-    ├── .gitignore
-    ├── README.md
-    └── requirements.txt
- ```
+   ├── .circleci/
+   │   └── config.yml
+   ├── .github/
+   │   └── FUNDING.yml
+   ├── app/
+   │   ├── authen/
+   │   │   ├── __init__.py
+   │   │   └── routes.py
+   │   ├── main/
+   │   │   ├── __init__.py
+   │   │   └── routes.py
+   │   ├── model/
+   │   │   └── user.py
+   │   ├── static/
+   │   │   ├── css
+   │   │   ├── fonts
+   │   │   ├── image
+   │   │   ├── js
+   │   │   └── vendor
+   │   ├── templates/
+   │   │   ├── base.html
+   │   │   ├── data.html
+   │   │   ├── index.html
+   │   │   ├── login.html
+   │   │   └── partials/
+   │   │       ├── footer.html
+   │   │       ├── header.html
+   │   │       └── sidebar-nav.html
+   │   ├── utils/
+   │   │   └── contants.py
+   │   ├── vendor/
+   │   │   ├── getToken.py
+   │   │   └── getData.py
+   │   ├── __init__.py
+   │   ├── app
+   │   ├── config.py
+   │   └── extensions.py
+   ├── test/
+   │   ├── __init__.py
+   │   ├── conftest.py
+   │   ├── auth/
+   │   │   └── test_login.py
+   │   └── main/
+   │       └── test_main.py
+   ├── .env
+   ├── .gitignore
+   ├── README.md
+   └── requirements.txt
+```
 
 > ## How to run this project <a name="run-project"></a>
 
 1. [Install python 3.9 (If you don't have)](https://www.python.org/downloads/)
 2. Clone project
+
 ```js
 git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
 ```
+
 3. Run commands:\
-**Notice: Please run commands in git bash or other terminal support Linux environment**
-> 
-5.1. Create virtual env
+   **Notice: Please run commands in git bash or other terminal support Linux environment**
+   > 5.1. Create virtual env
 
 ```js
 virtualenv ./venv
@@ -116,7 +118,7 @@ pip install -r requirements.txt
 3.4. Load all config from .env file
 
 ```js
-source .env
+source.env;
 ```
 
 3.5. Run project with command. Sever running on http://localhost:50000
@@ -131,37 +133,52 @@ flask run
 
 3.8. From this project open other terminal run command:
 
-```js
+```
 flask shell
 ```
 
 3.9. Run command create table, create sample data
 
-```js
+```
 from app.extensions import db
-from app.model.user import User
+from app.model import *
 db.create_all()
 user = User('admin', 'admin')
 db.session.add(user)
 db.session.commit()
 ```
+
 > ## Run test case <a name="run-test"></a>
+
 1. Windows
+
 ```
 pytest
 ```
+
 2. Linux
+
 ```
 python -m pytest
 ```
 
+3.10. Create requirements.txt
+
+```
+pip freeze > requirements.txt
+```
+
 > ## Contact us <a name="contact"></a>
-If you have any question, please contact us through email: 
+>
+> If you have any question, please contact us through email:
+
 ```js
 20110743@student.hcmute.edu.vn
 ```
-or 
-```js 
+
+or
+
+```js
 20110202@student.hcmute.edu.vn
 ```
 

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web-container:
+    image: flask-python/api-dashboard:v1.0.0
+    container_name: web-container
+    ports:
+      - 50001:50000
+    depends_on:
+      db-container:
+        condition: service_healthy
+    # networks:
+    #   - postgres-python-network
+  
+  db-container:
+    image: postgres:14
+    restart: always
+    container_name: db-container
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_DB: web
+      POSTGRES_PASSWORD: 1
+      PGPORT: 5433
+    ports:
+      - 5434:5433
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    # volumes:
+    #   - pgdata-volume:/var/lib/postgresql
+
+  # networks:
+  #   postgres-python-network:
+  #     name: postgres-python-network    
+
+  # volumes:
+  #   pgdata-volume:
+  
+      

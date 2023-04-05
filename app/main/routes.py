@@ -25,6 +25,17 @@ def index():
     username = request.cookies.get('username')
     return render_template('index.html', username=username)
 
+
+@bp.route('/profile', methods=[Method.GET])
+@login_required
+def getProfile():
+    return render_template('profile.html')
+
+@bp.route('/admin/user-manage', methods=[Method.GET])
+@login_required
+def getListUser():
+    return render_template('user-manage/list-user.html')
+
 @bp.route('/data', methods=[Method.GET])
 @login_required
 def getSampleData():

@@ -36,6 +36,11 @@ def loginPost():
     return 'Invalid username or password'
 
 
+@bp.route('/signup', methods=[Method.GET])
+def getSignUpForm():
+  return render_template('signup.html')
+
+
 @bp.route('/logout', methods=[Method.GET])
 @login_required
 def logout():

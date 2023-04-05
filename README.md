@@ -87,74 +87,54 @@
 ```
 
 > ## How to run this project <a name="run-project"></a>
-
+>
 1. [Install python 3.9 (If you don't have)](https://www.python.org/downloads/)
-2. Clone project
 
-```js
+2. Clone project
+```
 git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
 ```
 
 3. Run commands:\
-   **Notice: Please run commands in git bash or other terminal support Linux environment**
-   > 5.1. Create virtual env
 
-```js
+**Notice: Please run commands in git bash or other terminal support Linux environment**\
+
+3.1. Create virtual env
+
+```
 virtualenv ./venv
 ```
 
 3.2. Active virtualenv
 
-```js
+```
 source ./venv/Scripts/activate
 ```
 
 3.3. Install packakge from pip
 
-```js
+```
 pip install -r requirements.txt
 ```
 
 3.4. Load all config from .env file
 
-```js
-source.env;
+```
+source.env
 ```
 
-3.5. Run project with command. Sever running on http://localhost:50000
+3.5. [Download postgresQL](https://www.postgresql.org/download/) and config username password in postgresQL
 
-```js
+3.6. Open `.env` file in this project and change `DATABASE_URI=postgresql://<your_usernamw>:<your_password>@<your_host>:<your_port>/<your_database>"`
+
+3.7. Run project with command. Sever running on http://localhost:50000
+
+```
 flask run
 ```
 
-3.6. [Download postgresQL](https://www.postgresql.org/download/) and config username password in postgresQL
-
-3.7. Open `.env` file in this project and change `DATABASE_URI=postgresql://<your_usernamw>:<your_password>@<your_host>:<your_port>/<your_database>"`
-
-3.8. From this project open other terminal run command:
-
-```
-flask shell
-```
-
-3.9. Run command create table, create sample data
-
-```
-from app.extensions import db
-from app.model import *
-db.create_all()
-
-adminRole = Role('admin')
-userRole = Role('user')
-
-db.session.add_all([adminRole, userRole])
-user = User('admin', 'admin')
-db.session.add(user)
-db.session.commit()
-```
-
 > ## Run test case <a name="run-test"></a>
-
+>
 1. Windows
 
 ```

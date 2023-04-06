@@ -1,6 +1,7 @@
 from flask import render_template, request, make_response, redirect, url_for,session, Flask
 from flask_login import login_user, logout_user, login_required
 from flask_bcrypt import Bcrypt
+from flask_wtf.csrf import CSRFProtect
 
 import re
 from app.authen import bp
@@ -47,6 +48,7 @@ def loginPost():
     
     # Create Bcrypt for Check Pass
     app = Flask(__name__)
+    csrf = CSRFProtect(app)
     bcrypt = Bcrypt(app)
 
     if userDb and bcrypt.check_password_hash(userDb.password, password):
@@ -113,6 +115,7 @@ def SignUp():
       
       #hash Password
       app = Flask(__name__)
+      csrf = CSRFProtect(app)
       BcryptPass = Bcrypt(app)
       hashed_password = BcryptPass.generate_password_hash(password).decode('utf-8')
       

@@ -142,7 +142,7 @@
                             SignUp
                           </button>
                           <input type="hidden" id="signup_success" name="signup_success" value="{{check or 'false'}}" />
-                          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                           <script>
                             window.addEventListener('load', function(event) {  
                               fetch('clear_session')
@@ -157,7 +157,13 @@
                             var signup_check = document.getElementById('signup_success');
                             var value_check = signup_check.value;
                             if(value_check === 'true'){
-                              swal("Success!", "You have successfully created an account", "success");
+                              Swal.fire({
+                                position: 'fixed',
+                                icon: 'success',
+                                title: 'You have successfully created an account',
+                                showConfirmButton: false,
+                                timer: 1500
+                                })
                               signup_check.value ='false'
                             }
                           </script>

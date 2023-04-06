@@ -40,7 +40,7 @@ def index():
         childrenDict = data.get(keyHO)
         totalItemInHo = totalItemInHo + len(childrenDict)
         for hashKey in childrenDict:
-            itemDict = childrenDict.get(hashKey) 
+            itemDict = childrenDict[hashKey]
             if itemDict['status'] == 'ok':
                 totalStatusOK = totalStatusOK + 1
             else: 

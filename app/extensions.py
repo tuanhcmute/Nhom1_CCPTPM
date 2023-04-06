@@ -1,7 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_caching import Cache
+
 from sqlalchemy import inspect, create_engine
 
 db = SQLAlchemy()
+cache = Cache(config={'CACHE_TYPE': 'SimpleCache'})
 
 def database_is_empty(url):
   engine = create_engine(url)

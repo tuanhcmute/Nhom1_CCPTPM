@@ -2,13 +2,14 @@ from flask import Flask
 from flask_login import LoginManager
 
 from app.config import Config
-from app.extensions import db, database_is_empty
+from app.extensions import db, database_is_empty, cache
 from app.model import * 
-
 
 def createApp():
 
   app = Flask(__name__)
+  app.config['CACHE-TYPE'] = 'SimpleCache'
+  cache.init_app(app)
 
   # Using login manager
   loginManager = LoginManager()

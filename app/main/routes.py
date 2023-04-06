@@ -1,10 +1,12 @@
 from flask import render_template, make_response, request
 from flask_login import  login_required
+from datetime import datetime
 
 from app.main import bp
 from app.utils.contants import Method
 from app.vendor.getToken import getToken
 from app.vendor.getData import getData
+from app.extensions import cache
 
 @bp.after_request
 @login_required
@@ -22,8 +24,41 @@ def refreshToken(response):
 @bp.route('/', methods=[Method.GET])
 @login_required
 def index():
+
+    # Get token
+    token = request.cookies.get('access_token')
+    # Get data
+    data = getData(token)
+
+    totalHO = 0
+    totalItemInHo = 0
+    totalStatusOK = 0
+    totalStatusFail = 0
+
+    totalHO = len(data)
+    for keyHO in data:
+        childrenDict = data.get(keyHO)
+        totalItemInHo = totalItemInHo + len(childrenDict)
+        for hashKey in childrenDict:
+            itemDict = childrenDict.get(hashKey) 
+            if itemDict['status'] == 'ok':
+                totalStatusOK = totalStatusOK + 1
+            else: 
+                totalStatusFail = totalStatusFail + 1
+        
+            # if child.status == 'fail':
+            #     totalStatusFail = totalStatusFail + 1
+            # else:
+            #     totalStatusOK = totalStatusOK + 1
+
+
     username = request.cookies.get('username')
-    return render_template('index.html', username=username)
+    return render_template('index.html', 
+                           username=username, 
+                           totalHO=totalHO, 
+                           totalItemInHo=totalItemInHo, 
+                           totalStatusOK=totalStatusOK, 
+                           totalStatusFail=totalStatusFail, data=data)
 
 
 @bp.route('/profile', methods=[Method.GET])
@@ -41,6 +76,6 @@ def getListUser():
 def getSampleData():
     # Get token
     token = request.cookies.get('access_token')
+    # Get data
     data = getData(token)
-    print(len(data))
     return data

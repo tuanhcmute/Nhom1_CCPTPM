@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+from flask_wtf.csrf import CSRFProtect
 
 from app.config import Config
 from app.extensions import db, database_is_empty
@@ -46,7 +48,13 @@ def init_record():
 
   # Create admin account
   adminRoleDB = Role.query.filter_by(roleName='admin').first()
-  adminUser = User(username='admin', password='admin')
-  adminUser.roleId = adminRoleDB.id
+  # Hash password
+  app = Flask(__name__)
+  csrf = CSRFProtect(app)
+  BcryptPass = Bcrypt(app)
+  hashed_password = BcryptPass.generate_password_hash('admin').decode('utf-8')
+  
+  #Create user
+  adminUser = User(roleId=adminRoleDB.id,username='admin',password = hashed_password, age=18,fullname='admin', address='Hanoi', isEnable=True)
   db.session.add_all([adminUser])
   db.session.commit()

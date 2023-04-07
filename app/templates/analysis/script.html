@@ -341,10 +341,23 @@
     })
   }
 
+  function renderCalendar() {
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarMiniEl = document.getElementById("calendar-mini");
+        var calendarMini = new FullCalendar.Calendar(calendarMiniEl, {
+          initialView: "dayGridMonth",
+          headerToolbar: {
+            end: "today prev,next",
+          },
+        });
+        calendarMini.render();
+      });
+  }
 
   renderChart1()
   renderChart2()
   renderChart3()
+  renderCalendar()
 
 
 </script>

@@ -40,7 +40,8 @@
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Username</label>
-                          <input type="username" placeholder="username" id="username" name="username" />
+                          <input type="username" placeholder="Username" id="username" name="username" />
+                          <span id="errorMsg1" style="display: none; color: red;">Vui lòng điền tên đăng nhập</span>
                         </div>
                       </div>
                       <!-- end col -->
@@ -48,6 +49,7 @@
                         <div class="input-style-1">
                           <label>Password</label>
                           <input type="password" placeholder="Password" id="password" name="password"/>
+                          <span id="errorMsg2" style="display: none; color: red;">Vui lòng điền mật khẩu </span>
                         </div>
                       </div>
                       <!-- end col -->
@@ -75,6 +77,7 @@
                                 console.log(error);
                               });      
                               console.log("ok")
+        
                             });  
                             var userCheckbox = document.getElementById("user");
                             var adminCheckbox = document.getElementById("admin");
@@ -101,6 +104,27 @@
                                 console.log(this.value);
                               }
                             });
+
+                            var username = document.getElementById("username");
+                            var password = document.getElementById("password");
+                            var errorMsg1 = document.getElementById("errorMsg1");
+                            var errorMsg2 = document.getElementById("errorMsg2");
+
+                            username.addEventListener("blur", function() {
+                              if (username.value === "") {
+                                errorMsg1.style.display = "block";
+                              } else {
+                                errorMsg1.style.display = "none";
+                              }
+                            });  
+
+                            password.addEventListener("blur", function() {
+                              if (password.value === "") {
+                                errorMsg2.style.display = "block";
+                              } else {
+                                errorMsg2.style.display = "none";
+                              }
+                            });                           
                           </script>
                       </div>
 
@@ -129,7 +153,7 @@
                             mb-30
                           "
                         >
-                          <a href="#0" class="hover-underline"
+                          <a href="{{url_for('authen.getForgotPasswordForm')}}" class="hover-underline"
                             >Forgot Password?</a
                           >
                         </div>

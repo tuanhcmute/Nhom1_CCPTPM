@@ -57,6 +57,7 @@
                         <div class="input-style-1">
                           <label>Username</label>
                           <input type="username" placeholder="Username" id="username" name="username" />
+                          <span id="errorMsg1" style="display: none; color: red;">Vui lòng điền tên đăng nhập</span>
                         </div>
                       </div>
                       <!-- end col -->
@@ -64,24 +65,28 @@
                         <div class="input-style-1">
                           <label>Password</label>
                           <input type="password" placeholder="Password" id="password" name="password"/>
+                          <span id="errorMsg2" style="display: none; color: red;">Vui lòng điền mật khẩu</span>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Fullname</label>
                           <input type="text" placeholder="Fullname" id="fullname" name="fullname"/>
+                          <span id="errorMsg3" style="display: none; color: red;">Vui lòng điền tên</span>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Age</label>
                           <input type="number" placeholder="Age" id="age" name="age"/>
+                          <span id="errorMsg4" style="display: none; color: red;">Vui lòng điền tuổi</span>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Address</label>
                           <input type="text" placeholder="Address" id="address" name="address"/>
+                          <span id="errorMsg5" style="display: none; color: red;">Vui lòng điền địa chỉ</span>
                         </div>
                       </div>
                       <!-- end col -->
@@ -166,6 +171,58 @@
                                 })
                               signup_check.value ='false'
                             }
+
+                            var username = document.getElementById("username");
+                            var password = document.getElementById("password");
+                            var fullname = document.getElementById("fullname");
+                            var age = document.getElementById("age");
+                            var address = document.getElementById("address");
+
+                            var errorMsg1 = document.getElementById("errorMsg1");
+                            var errorMsg2 = document.getElementById("errorMsg2");
+                            var errorMsg3 = document.getElementById("errorMsg3");
+                            var errorMsg4 = document.getElementById("errorMsg4");
+                            var errorMsg5 = document.getElementById("errorMsg5");
+
+                            username.addEventListener("blur", function() {
+                              if (username.value === "") {
+                                errorMsg1.style.display = "block";
+                              } else {
+                                errorMsg1.style.display = "none";
+                              }
+                            });  
+
+                            password.addEventListener("blur", function() {
+                              if (password.value === "") {
+                                errorMsg2.style.display = "block";
+                              } else {
+                                errorMsg2.style.display = "none";
+                              }
+                            });       
+
+                            fullname.addEventListener("blur", function() {
+                              if (fullname.value === "") {
+                                errorMsg3.style.display = "block";
+                              } else {
+                                errorMsg3.style.display = "none";
+                              }
+                            });     
+                            
+                            age.addEventListener("blur", function() {
+                              if (age.value === "") {
+                                errorMsg4.style.display = "block";
+                              } else {
+                                errorMsg4.style.display = "none";
+                              }
+                            });   
+
+                            address.addEventListener("blur", function() {
+                              if (address.value === "") {
+                                errorMsg5.style.display = "block";
+                              } else {
+                                errorMsg5.style.display = "none";
+                              }
+                            });   
                           </script>
                           <div class="pt-40">
                             <p class="text-sm text-medium text-dark text-center">

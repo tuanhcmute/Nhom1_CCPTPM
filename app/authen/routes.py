@@ -205,8 +205,8 @@ def check_data_login():
 # Check Strong pass
 def check_password(password):
     # Kiểm tra độ dài mật khẩu
-    if len(password) < 6 or len(password) > 8:
-      return 'Mật khẩu phải từ 6 đến 8 ký tự'
+    if len(password) < 6 or len(password) > 20:
+      return 'Mật khẩu phải từ 6 đến 20 ký tự'
 
     # Kiểm tra các ký tự trong mật khẩu
     if not re.search(r'\d', password):

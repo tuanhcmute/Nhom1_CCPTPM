@@ -27,7 +27,7 @@
       }
     })
 
-
+    // Count item
     Object.keys(dataObj).forEach(key1 => {
       Object.keys(dataObj[key1]).forEach((key2, index) => {
           // console.log(dataObj[key1][key2])
@@ -37,9 +37,9 @@
             [date]: datasets[date] + 1
           }
       })
-
     })
 
+    // Delete item if value of item = 0
     Object.keys(datasets).forEach(item => {
       if(datasets[item] === 0) {
         delete datasets[item]
@@ -49,8 +49,52 @@
       return datasets;
   }
 
-  function renderChart1() {
+  function getDataForChart4() {
+    console.log('chart 4');
+    const labels = [ ...Array(31).keys() ].map(item => {
+        return item + 1 < 10 ? `2022-12-0${item + 1}` : `2022-12-${item + 1}`
+      });
       
+    let datasets = {}
+    labels.forEach(item => {
+      datasets = {
+        ...datasets,
+        [item]: {
+            ok: 0,
+            fail: 0
+        }
+      }
+    })
+
+     // Count OK and fail
+    Object.keys(dataObj).forEach(key1 => {
+      Object.keys(dataObj[key1]).forEach((key2, index) => {
+          // console.log(dataObj[key1][key2])
+          const date = dataObj[key1][key2]['date'].slice(0, 10).trim();
+          let childData = {...datasets[date]};
+          if(dataObj[key1][key2]['status'] === 'ok') {
+            childData = {
+              ...childData,
+              ok: childData?.ok + 1
+            } 
+          } else {
+            childData = {
+              ...childData,
+              fail: childData?.fail + 1
+            } 
+          }
+          datasets = {
+            ...datasets,
+            [date]: {
+              ...childData
+            }
+          }
+      })
+    })
+    return datasets;
+  }
+
+  function renderChart1() {
       const datasets = getDataForChart1AndChart2();
     // =========== chart one start
       const ctx1 = document.getElementById("Chart1").getContext("2d");
@@ -354,9 +398,110 @@
       });
   }
 
+  function renderChart4() {
+    const datasets = getDataForChart4()
+    const okCount = Object.keys(datasets).map(item => {
+      return datasets[item]['ok'];
+    })
+    const failCount = Object.keys(datasets).map(item => {
+      return datasets[item]['fail'];
+    })
+    const ctx4 = document.getElementById("Chart4").getContext("2d");
+    const chart4 = new Chart(ctx4, {
+      // The type of chart we want to create
+      type: "bar", // also try bar or other graph types
+      // The data for our dataset
+      data: {
+        labels: Object.keys(datasets),
+        // Information about the dataset
+        datasets: [
+          {
+            label: "OK",
+            backgroundColor: "#4A6CF7",
+            barThickness: "flex",
+            maxBarThickness: 8,
+            data: okCount,
+          },
+          {
+            label: "Fail",
+            backgroundColor: "#d50100",
+            barThickness: "flex",
+            maxBarThickness: 8,
+            data: failCount,
+          },
+        ],
+      },
+      // Configuration options
+      options: {
+        borderColor: "#F3F6F8",
+        borderWidth: 15,
+        backgroundColor: "#F3F6F8",
+        tooltips: {
+          callbacks: {
+            labelColor: function (tooltipItem, chart) {
+              return {
+                backgroundColor: "rgba(104, 110, 255, .0)",
+              };
+            },
+          },
+          backgroundColor: "#F3F6F8",
+          titleFontColor: "#8F92A1",
+          titleFontSize: 12,
+          bodyFontColor: "#171717",
+          bodyFontStyle: "bold",
+          bodyFontSize: 16,
+          multiKeyBackground: "transparent",
+          displayColors: false,
+          xPadding: 30,
+          yPadding: 10,
+          bodyAlign: "center",
+          titleAlign: "center",
+        },
+
+        title: {
+          display: false,
+        },
+        legend: {
+          display: false,
+        },
+
+        scales: {
+          yAxes: [
+            {
+              gridLines: {
+                display: false,
+                drawTicks: false,
+                drawBorder: false,
+              },
+              ticks: {
+                padding: 35,
+                max: 800,
+                min: 0,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+                drawBorder: false,
+                color: "rgba(143, 146, 161, .1)",
+                zeroLineColor: "rgba(143, 146, 161, .1)",
+              },
+              ticks: {
+                padding: 20,
+              },
+            },
+          ],
+        },
+      },
+    });
+    // =========== chart four end
+  }
   renderChart1()
   renderChart2()
   renderChart3()
+  renderChart4()
   renderCalendar()
 
 

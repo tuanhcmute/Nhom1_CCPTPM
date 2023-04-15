@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
   roleId = db.Column(db.Integer, db.ForeignKey(Role.id))
 
 
-  def __init__(self,roleId, username, password,email,avatar, age=None, fullname=None, address=None, isEnable=None):
+  def __init__(self,roleId, username, password,email = None,avatar = None, age=None, fullname=None, address=None, isEnable=None):
     self.username = username
     self.password = password
     self.email = email

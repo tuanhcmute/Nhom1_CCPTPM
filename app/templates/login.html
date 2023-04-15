@@ -40,7 +40,7 @@
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Username</label>
-                          <input type="username" placeholder="Username" id="username" name="username" />
+                          <input type="username" placeholder="Username" id="username" name="username" required/>
                           <span id="errorMsg1" style="display: none; color: red;">Vui lòng điền tên đăng nhập</span>
                         </div>
                       </div>
@@ -48,7 +48,7 @@
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Password</label>
-                          <input type="password" placeholder="Password" id="password" name="password"/>
+                          <input type="password" placeholder="Password" id="password" name="password" required/>
                           <span id="errorMsg2" style="display: none; color: red;">Vui lòng điền mật khẩu </span>
                         </div>
                       </div>
@@ -62,10 +62,10 @@
                         <div class="input-style-1">
                           <label>Role</label>
                         </div>
-                          <input type="checkbox" id="user" name="user">
+                          <input type="checkbox" id="user" name="user" >
                           <label for="user">User</label>
                         
-                          <input type="checkbox" id="admin" name="admin">
+                          <input type="checkbox" id="admin" name="admin" >
                           <label for="admin">Admin</label>
                           <script>
                              window.addEventListener('load', function(event) {  

@@ -56,7 +56,7 @@
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Username</label>
-                          <input type="username" placeholder="Username" id="username" name="username" />
+                          <input type="username" placeholder="Username" id="username" name="username" required/>
                           <span id="errorMsg1" style="display: none; color: red;">Vui lòng điền tên đăng nhập</span>
                         </div>
                       </div>
@@ -64,29 +64,44 @@
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Password</label>
-                          <input type="password" placeholder="Password" id="password" name="password"/>
+                          <input type="password" placeholder="Password" id="password" name="password" required/>
                           <span id="errorMsg2" style="display: none; color: red;">Vui lòng điền mật khẩu</span>
+                          <span id="errorMsg8" style="display: none; color: red;">Mật khẩu chưa đủ mạnh. Phải có ít nhất 1 chữ hoa 1 chữ thường 1 số và độ dài từ 6 đến 20</span>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Fullname</label>
-                          <input type="text" placeholder="Fullname" id="fullname" name="fullname"/>
+                          <input type="text" placeholder="Fullname" id="fullname" name="fullname" required/>
                           <span id="errorMsg3" style="display: none; color: red;">Vui lòng điền tên</span>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Age</label>
-                          <input type="number" placeholder="Age" id="age" name="age"/>
+                          <input type="number" placeholder="Age" id="age" name="age" required/>
                           <span id="errorMsg4" style="display: none; color: red;">Vui lòng điền tuổi</span>
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Address</label>
-                          <input type="text" placeholder="Address" id="address" name="address"/>
+                          <input type="text" placeholder="Address" id="address" name="address" required/>
                           <span id="errorMsg5" style="display: none; color: red;">Vui lòng điền địa chỉ</span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Email</label>
+                          <input type="email" placeholder="Email" id="email" name="email" value ="" required />
+                          <span id="errorMsg6" style="display: none; color: red;">Vui lòng điền email</span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Avatar</label>
+                          <input type="url" placeholder="Link Images URL" id="avatar" name="avatar" required>
+                          <span id="errorMsg7" style="display: none; color: red;">Vui lòng điền url images</span>
                         </div>
                       </div>
                       <!-- end col -->
@@ -167,7 +182,7 @@
                                 icon: 'success',
                                 title: 'You have successfully created an account',
                                 showConfirmButton: false,
-                                timer: 1500
+                                timer: 3000
                                 })
                               signup_check.value ='false'
                             }
@@ -177,12 +192,17 @@
                             var fullname = document.getElementById("fullname");
                             var age = document.getElementById("age");
                             var address = document.getElementById("address");
+                            var email = document.getElementById("email");
+                            var avatar= document.getElementById("avatar");
 
                             var errorMsg1 = document.getElementById("errorMsg1");
                             var errorMsg2 = document.getElementById("errorMsg2");
                             var errorMsg3 = document.getElementById("errorMsg3");
                             var errorMsg4 = document.getElementById("errorMsg4");
                             var errorMsg5 = document.getElementById("errorMsg5");
+                            var errorMsg6 = document.getElementById("errorMsg6");
+                            var errorMsg7 = document.getElementById("errorMsg7");
+                            var errorMsg8 = document.getElementById("errorMsg8");
 
                             username.addEventListener("blur", function() {
                               if (username.value === "") {
@@ -223,6 +243,35 @@
                                 errorMsg5.style.display = "none";
                               }
                             });   
+                            email.addEventListener("blur", function() {
+                              if (email.value === "") {
+                                errorMsg6.style.display = "block";
+                              } else {
+                                errorMsg6.style.display = "none";
+                              }
+                            });   
+
+                            avatar.addEventListener("blur", function() {
+                              if (avatar.value === "") {
+                                errorMsg7.style.display = "block";
+                              } else {
+                                errorMsg7.style.display = "none";
+                              }
+                            });   
+
+
+                            password.addEventListener("input", function() {
+                              if (validatePassword(password.value) || password.value === "") {
+                                errorMsg8.style.display = "none";
+                              } else {
+                                errorMsg8.style.display = "block";
+                              }
+                            });  
+
+                            function validatePassword(password) {
+                              const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;                              
+                              return regex.test(password);
+                            }
                           </script>
                           <div class="pt-40">
                             <p class="text-sm text-medium text-dark text-center">

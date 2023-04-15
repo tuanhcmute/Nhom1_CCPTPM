@@ -8,6 +8,8 @@ class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   username = db.Column(db.String, unique=True, nullable=False)
   password = db.Column(db.String, nullable=False)
+  email = db.Column(db.String, unique=True, nullable=False)
+  avatar = db.Column(db.String, nullable=True)
   age = db.Column(db.Integer, nullable=True)
   fullname = db.Column(db.String, nullable=True)
   address = db.Column(db.String, nullable=True)
@@ -15,9 +17,11 @@ class User(db.Model, UserMixin):
   roleId = db.Column(db.Integer, db.ForeignKey(Role.id))
 
 
-  def __init__(self,roleId, username, password,age=None, fullname=None, address=None, isEnable=None):
+  def __init__(self,roleId, username, password,email,avatar, age=None, fullname=None, address=None, isEnable=None):
     self.username = username
     self.password = password
+    self.email = email
+    self.avatar = avatar
     self.age = age
     self.fullname = fullname
     self.address = address

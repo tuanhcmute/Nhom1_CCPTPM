@@ -206,8 +206,8 @@ def ForgotPassword():
 
       response = make_response(redirect(url_for('authen.getResetPasswordForm', check = True)))
       # Set cookie
-      response.set_cookie('secret_key', secret_key, max_age=300)
-      response.set_cookie('email', email, max_age=300)
+      response.set_cookie('secret_key', secret_key, max_age=300, httponly=True)
+      response.set_cookie('email', email, max_age=300, httponly=True)
       return response
   except Exception as e:
       print('An error occurred while querying the database:', str(e))

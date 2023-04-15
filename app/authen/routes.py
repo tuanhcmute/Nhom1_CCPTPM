@@ -217,7 +217,7 @@ def ForgotPassword():
 
 #--------------------Reset Password----------------#
 @bp.route('/reset-password', methods=[Method.GET])
-def getResetPasswordForm(check = None):
+def getResetPasswordForm():
   check = request.args.get('check')
   if check:
     return render_template('resetpassword.html', check_sentOTP = 'True')

@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, login_required
 from flask_bcrypt import Bcrypt
 from flask_wtf.csrf import CSRFProtect
 
-
 import re
+import os
 from app.authen import bp
 from app.utils.contants import Method
 from app.model.user import User
@@ -14,7 +14,7 @@ from app.extensions import db
 import random
 import smtplib
 import pyotp
-
+import time
 
 #------------------LOGIN--------------------#
 
@@ -52,6 +52,7 @@ def loginPost():
       error = 'Access Denied'
       session['message'] = error
       return redirect(request.referrer)
+
     
     # Create Bcrypt for Check Pass
     app = Flask(__name__)
@@ -117,6 +118,8 @@ def SignUp():
       fullname = request.form.get('fullname')
       address = request.form.get('address')
       age = request.form.get('age')
+      email = request.form.get('email')
+      avatar = request.form.get('avatar')
       role = int(request.form.get('user_type'))
 
       #Check Strong password
@@ -133,7 +136,7 @@ def SignUp():
       hashed_password = BcryptPass.generate_password_hash(password).decode('utf-8')
       
       #create user
-      user = User(role, username, hashed_password, age, fullname, address, isEnable=True)
+      user = User(role, username, hashed_password,email,avatar, age, fullname, address, isEnable=True)
       db.session.add_all([user])
       db.session.commit()
 
@@ -155,76 +158,134 @@ def getForgotPasswordForm():
 
 @bp.route('/forgot-password', methods=[Method.POST])
 def ForgotPassword():
-  message_forgot_password = check_data_forgot_password()
-  if ( message_forgot_password != 'Success'):
-    error =  message_forgot_password
-    session['message_forgot_password'] = error
-    return redirect(request.referrer)
   try:
       #get_data
       email = request.form.get('email')
-      new_password = request.form['new_password']
-      confirm_password = request.form['confirm_password']
 
-      #Check new_password and confirm_password
-      if(new_password != confirm_password):
-        error = 'Mật khẩu không khớp'
-        session['message_forgot_password'] = error
-        return redirect(request.referrer)
-
-      #Check Strong Password 
-      check_pass= check_password(new_password)
-      if(check_pass != 'Success'):
-        error = check_pass
+      # Check email exists
+      if check_email() != 'Success':
+        error = 'Email của bạn không đúng. Vui lòng nhập chính xác Email'
         session['message_forgot_password'] = error
         return redirect(request.referrer)
       
-
+      # Save Pass
       ###Sent OTP
-      # Generate OTP
-      totp = pyotp.TOTP(pyotp.random_base32())
-      OTP = totp.now()
-
       # Create Secret Key
       secret_key = pyotp.random_base32()
-      session['secret_key'] = secret_key
 
-      # Send OTP via email
-      sender_email = 'zzro333@gmail.com'
-      sender_password = 'wiibdoxuisaydfnb'
+      # Generate OTP
+      totp = pyotp.TOTP(secret_key, interval=300)
+      OTP = totp.now()
+      print("OTP: "+ OTP)
+
+      # Get expiration time of an OTP code
+      expires_at = time.time() + totp.interval
+      exp_time = time.strftime('%H:%M:%S %d/%m/%Y', time.localtime(expires_at))
+      print(exp_time)
+      
+
+      ## Send OTP via email
+      # Get email account from .env
+      sent_mail_user = os.getenv('MAIL_USERNAME')
+      sent_mail_pass = os.getenv('MAIL_PASSWORD')
+
+      sender_email = sent_mail_user
+      sender_password = sent_mail_pass
       receiver_email = email
-      message = f'Subject: Password Reset OTP\n\nYour OTP is {otp}.'
+      message = f'Subject: Password Reset\n\nWe have received a request to reset the password for your account. \nYour OTP is: {OTP}. \nPlease enter this code on the password reset page to proceed. This code will be valid until {exp_time}.\n\nIf you did not request a password reset, please ignore this message and take appropriate measures to secure your account.\n\nThank you for using our service.\n\nBest regards,\nGroup 01'
       server = smtplib.SMTP('smtp.gmail.com', 587)
       server.starttls()
       server.login(sender_email, sender_password)
       server.sendmail(sender_email, receiver_email, message)
       server.quit()
       
-      #return render_template('reset_password.html', email=email)
 
       # Clear Session
       session.pop('message_forgot_password', None)
 
-      return render_template('resetpassword.html', email = email)
+
+      response = make_response(redirect(url_for('authen.getResetPasswordForm', check = True)))
+      # Set cookie
+      response.set_cookie('secret_key', secret_key, max_age=300)
+      response.set_cookie('email', email, max_age=300)
+      return response
   except Exception as e:
       print('An error occurred while querying the database:', str(e))
       error = 'Error'
-      session['message_signup'] = error
+      session['message_forgot_password'] = error
       return redirect(request.referrer)
+
+#--------------------Reset Password----------------#
+@bp.route('/reset-password', methods=[Method.GET])
+def getResetPasswordForm(check = None):
+  check = request.args.get('check')
+  if check:
+    return render_template('resetpassword.html', check_sentOTP = 'True')
+  return render_template('resetpassword.html')
 
 @bp.route('/reset-password', methods=['POST'])
 def reset_password():
-    email = request.form['email']
-    user_otp = request.form['otp']
+    #Get Data
     new_password = request.form['new_password']
+    confirm_password = request.form['confirm_password']
+    user_otp = str(request.form.get('OTP'))
+
+    #Check new_password and confirm_password
+    if(new_password != confirm_password):
+      error = 'Mật khẩu không khớp'
+      session['message_reset_password'] = error
+      return redirect(request.referrer)
+
+    #Check Strong Password 
+    check_pass= check_password(new_password)
+    if(check_pass != 'Success'):
+      error = check_pass
+      session['message_reset_password'] = error
+      return redirect(request.referrer)
     
-    # Verify OTP
-    if int(user_otp) == otp:
-        # Update password in database
-        # ...
-        return 'Password reset successful!'
-    else:
-        return 'Invalid OTP.'
+    # Get secret_key and email form cookies
+    secret_key = request.cookies.get('secret_key')
+    email = request.cookies.get('email')
+
+    if not secret_key:
+      error = f'Bạn Không Thể Xác Thực OTP. Vui lòng quay lại trang Forgot Password'
+      session['message_reset_password'] = error
+      return redirect(request.referrer)
+    # Create TOTP
+    totp = pyotp.TOTP(secret_key, interval=300)
+
+    # Create check Verify
+    check = False
+    try:
+      # Verify
+      if totp.verify(user_otp):
+        user = User.query.filter_by(email = email).first()
+        if user:
+            #Hash Password
+            app = Flask(__name__)
+            csrf = CSRFProtect(app)
+            BcryptPass = Bcrypt(app)
+            hashed_password = BcryptPass.generate_password_hash(new_password).decode('utf-8')
+
+            #Save 
+            user.password = hashed_password
+            db.session.commit()
+            check = True
+      else:
+        error = f'OTP không chính xác. Vui lòng thử lại!!'
+        session['message_reset_password'] = error
+        return redirect(request.referrer)
+          
+      # Create Response
+      response = make_response(render_template('resetpassword.html', check=check))
+      if check:
+        response.delete_cookie('secret_key')
+        response.delete_cookie('email')
+      return response   
+    except:
+        print("Mã OTP không hợp lệ, xác thực thất bại")
+    
+      
 #-----------------Clear session-----------------#
 @bp.route('/form_login')
 def clear_session_login():
@@ -249,33 +310,20 @@ def clear_session():
 def check_user_data_signup():
   # Lấy giá trị từ các trường của form
   username = request.form.get('username')
-  password = request.form.get('password')
-  fullname = request.form.get('fullname')
-  address = request.form.get('address')
-  age = request.form.get('age')
-  # Kiểm tra xem các trường này có được điền đầy đủ hay không
-  if not username:
-      return 'Vui lòng nhập tên đăng nhập'
-  if not password:
-      return 'Vui lòng nhập mật khẩu'
-  if not fullname:
-      return 'Vui lòng nhập tên'
-  if not age:
-      return 'Vui lòng nhập tuổi'
-  if not address:
-      return 'Vui lòng nhập địa chỉ'
-  
+  email = request.form.get('email')
+
   # Kiểm tra username có tồn tại hay không
   user = User.query.filter_by(username=username).first()
+  email = User.query.filter_by(email=email).first()
   if user is not None:
     return 'Username đã tồn tại'
+  if email is not None:
+    return 'Email đã được sử dụng'
   
   return 'Success'
 
 def check_data_login():
   # Lấy giá trị từ các trường của form
-  username = request.form.get('username')
-  password = request.form.get('password')
   role_user = request.form.get("user")
   role_admin = request.form.get("admin")
   role = 0
@@ -284,27 +332,10 @@ def check_data_login():
   elif (role_user is not None):
     role = int(role_user)
   # Kiểm tra xem các trường này có được điền đầy đủ hay không
-  if not username:
-    return 'Vui lòng nhập tên đăng nhập'
-  if not password:
-    return 'Vui lòng nhập mật khẩu'
   if role == 0:
     return 'Vui lòng click vào checkbox Role'
   
   return 'Success'
-
-def check_data_forgot_password():
-    email = request.form['email']
-    new_password = request.form['new_password']
-    confirm_password = request.form['confirm_password']
-    
-    if not email:
-      return 'Vui lòng điền Email'
-    elif not new_password:
-      return 'Vui lòng điền mật khẩu mới' 
-    elif not confirm_password:
-      return 'Vui lòng xác nhận mật khẩu mới'
-    return 'Success'
 
 #--------------Check Strong Pass------------------#
 def check_password(password):
@@ -323,3 +354,14 @@ def check_password(password):
     # Nếu mật khẩu thỏa mãn tất cả các yêu cầu
     return 'Success'
 
+#------------- Check Email --------------#
+def check_email():
+  try:
+    email = request.form.get('email')
+    user = db.session.query(User).filter(User.email==email).first()
+    if user:
+      return 'Success'
+    else:
+      return 'The email does not exist.'
+  except Exception as e:
+    print("NOT OK")

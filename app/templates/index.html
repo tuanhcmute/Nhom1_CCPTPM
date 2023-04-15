@@ -272,7 +272,7 @@
                 "
               >
                 <div class="left">
-                  <h6 class="text-medium mb-2">Traffic</h6>
+                  <h6 class="text-medium mb-2">Total amount OK, fail in one day</h6>
                 </div>
                 <div class="right">
                   <div class="select-style-1 mb-2">
@@ -297,12 +297,11 @@
                       <div class="d-flex">
                         <span class="bg-color primary-bg"> </span>
                         <div class="text">
-                          <p class="text-sm text-success">
-                            <span class="text-dark">Store Visits</span>
-                            +25.55%
-                            <i class="lni lni-arrow-up"></i>
+                          <p class="text-sm text-success d-flex gap-2">
+                            <span class="text-dark">Total amount OK</span> 
+                            <span>{{ ((totalStatusOK/totalStatusFail) * 100)|round  }}%</span>
                           </p>
-                          <h2>3456</h2>
+                          <h2>{{ totalStatusOK }} items</h2>
                         </div>
                       </div>
                     </li>
@@ -310,11 +309,10 @@
                       <div class="d-flex">
                         <span class="bg-color danger-bg"></span>
                         <div class="text">
-                          <p class="text-sm text-danger">
-                            <span class="text-dark">Visitors</span> -2.05%
-                            <i class="lni lni-arrow-down"></i>
+                          <p class="text-sm text-danger d-flex gap-2">
+                            <span class="text-dark">Total amount fail </span><span> {{ 100 - ((totalStatusOK/totalStatusFail) * 100)|round }}%</span>
                           </p>
-                          <h2>3456</h2>
+                          <h2>{{ totalStatusFail }} items</h2>
                         </div>
                       </div>
                     </li>

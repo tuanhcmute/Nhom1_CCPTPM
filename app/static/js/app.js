@@ -1,3 +1,5 @@
+const BASE_URL = window.location.origin;
+
 (function () {
   /* ========= sidebar toggle ======== */
   const sidebarNavWrapper = document.querySelector(".sidebar-nav-wrapper");
@@ -32,3 +34,62 @@
     mainWrapper.classList.remove("active");
   });
 })();
+
+
+// Handle user manage
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+
+function deleteUser(data) {
+  const url = BASE_URL + '/admin/user-manage/delete'
+  const userId = data?.dataset?.userid;
+  if(userId) {
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+         if (result.isConfirmed) {
+        const ajxReq = $.ajax( url, {
+            type : 'DELETE',
+            data: {userId},
+            success: function(resultData){
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              ).then(() => {
+                $.ajax(BASE_URL + '/admin/user-manage', {
+                  type: 'GET'
+                })
+              })
+            },
+            error: function(data) {
+              alert('error');
+            }
+            
+        });
+
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+}
+

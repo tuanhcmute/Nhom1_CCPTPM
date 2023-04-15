@@ -66,14 +66,16 @@
                       <!-- end table row-->
                     </thead>
                     <tbody>
-                      <tr>
+                      {% for user in users %}
+                       <tr>
                         <td>
                           <div class="employee-image">
-                            <img src="assets/images/lead/lead-1.png" alt="" />
+                            <img
+                            src="{{ url_for('static', filename='images/profile/profile-image.png') }}"alt="" />
                           </div>
                         </td>
                         <td class="min-width">
-                          <p>Esther Howard</p>
+                          <p>{{user.username}}</p>
                         </td>
                         <td class="min-width">
                           <p><a href="#0">yourmail@gmail.com</a></p>
@@ -86,147 +88,16 @@
                         </td>
                         <td>
                           <div class="action">
-                            <button class="text-danger">
+                            <button class="text-primary" >
+                              <i class="lni lni-pencil-alt"></i>
+                            </button>
+                            <button class="text-danger" onclick="deleteUser(this)" data-userid="{{user.id}}">
                               <i class="lni lni-trash-can"></i>
                             </button>
                           </div>
                         </td>
                       </tr>
-                      <!-- end table row -->
-                      <tr>
-                        <td>
-                          <div class="employee-image">
-                            <img src="assets/images/lead/lead-2.png" alt="" />
-                          </div>
-                        </td>
-                        <td class="min-width">
-                          <p>D. Jonathon</p>
-                        </td>
-                        <td class="min-width">
-                          <p><a href="#0">yourmail@gmail.com</a></p>
-                        </td>
-                        <td class="min-width">
-                          <p>React Dashboard</p>
-                        </td>
-                        <td class="min-width">
-                          <span class="status-btn active-btn">Active</span>
-                        </td>
-                        <td>
-                          <div class="action">
-                            <button class="text-danger">
-                              <i class="lni lni-trash-can"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      <!-- end table row -->
-                      <tr>
-                        <td>
-                          <div class="employee-image">
-                            <img src="assets/images/lead/lead-3.png" alt="" />
-                          </div>
-                        </td>
-                        <td>
-                          <p>John Doe</p>
-                        </td>
-                        <td>
-                          <p><a href="#0">yourmail@gmail.com</a></p>
-                        </td>
-                        <td>
-                          <p>Bootstrap Template</p>
-                        </td>
-                        <td>
-                          <span class="status-btn success-btn">Done</span>
-                        </td>
-                        <td>
-                          <div class="action">
-                            <button class="text-danger">
-                              <i class="lni lni-trash-can"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      <!-- end table row -->
-                      <tr>
-                        <td>
-                          <div class="employee-image">
-                            <img src="assets/images/lead/lead-4.png" alt="" />
-                          </div>
-                        </td>
-                        <td>
-                          <p>Rayhan Jamil</p>
-                        </td>
-                        <td>
-                          <p><a href="#0">yourmail@gmail.com</a></p>
-                        </td>
-                        <td>
-                          <p>Css Grid Template</p>
-                        </td>
-                        <td>
-                          <span class="status-btn info-btn">Pending</span>
-                        </td>
-                        <td>
-                          <div class="action">
-                            <button class="text-danger">
-                              <i class="lni lni-trash-can"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      <!-- end table row -->
-                      <tr>
-                        <td>
-                          <div class="employee-image">
-                            <img src="assets/images/lead/lead-5.png" alt="" />
-                          </div>
-                        </td>
-                        <td>
-                          <p>Esther Howard</p>
-                        </td>
-                        <td>
-                          <p><a href="#0">yourmail@gmail.com</a></p>
-                        </td>
-                        <td>
-                          <p>Admin Dashboard Design</p>
-                        </td>
-                        <td>
-                          <span class="status-btn close-btn">Close</span>
-                        </td>
-                        <td>
-                          <div class="action">
-                            <button class="text-danger">
-                              <i class="lni lni-trash-can"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      <!-- end table row -->
-                      <tr>
-                        <td>
-                          <div class="employee-image">
-                            <img src="assets/images/lead/lead-6.png" alt="" />
-                          </div>
-                        </td>
-                        <td>
-                          <p>Anee Doe</p>
-                        </td>
-                        <td>
-                          <p><a href="#0">yourmail@gmail.com</a></p>
-                        </td>
-                        <td>
-                          <p>Space Template Update</p>
-                        </td>
-                        <td>
-                          <span class="status-btn active-btn">Active</span>
-                        </td>
-                        <td>
-                          <div class="action">
-                            <button class="text-danger">
-                              <i class="lni lni-trash-can"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
+                      {% endfor %}
                       <!-- end table row -->
                     </tbody>
                   </table>

@@ -56,6 +56,6 @@ def init_record():
   hashed_password = BcryptPass.generate_password_hash('admin').decode('utf-8')
   
   #Create user
-  adminUser = User(roleId=adminRoleDB.id,username='admin',password = hashed_password, age=18,fullname='admin', address='Hanoi', isEnable=True)
+  adminUser = User(roleId=adminRoleDB.id,username='admin',email ='admin@gmail.com', avatar ='https://www.clipartmax.com/png/middle/319-3191274_male-avatar-admin-profile.png', password = hashed_password, age=18,fullname='admin', address='Hanoi', isEnable=True)
   db.session.add_all([adminUser])
   db.session.commit()

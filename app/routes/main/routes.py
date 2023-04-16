@@ -1,8 +1,8 @@
-from flask import render_template, make_response, request, jsonify
+from flask import render_template, make_response, request, json, jsonify
 from flask_login import  login_required
 from datetime import datetime
 
-from app.main import bp
+from app.routes.main import bp
 from app.utils.contants import Method
 from app.vendor.getToken import getToken
 from app.vendor.getData import getData
@@ -61,23 +61,9 @@ def index():
 def getProfile():
     return render_template('profile.html')
 
-@bp.route('/admin/user-manage', methods=[Method.GET])
-@login_required
-def getListUser():
-    is_enable = True
-    users = User.query.filter_by(isEnable=is_enable).all()
-    return render_template('user-manage/list-user.html', users=users)
 
-@bp.route('/admin/user-manage/delete', methods=[Method.DELETE])
-@login_required
-def deleteUser():
-    dict_keys = request.form
-    user_id = dict_keys['userId']
-    user = User.query.filter_by(id=user_id).first()
-    # Update user
-    user.isEnable = False
-    db.session.commit()
-    return 'hello world'
+
+
 
 
 @bp.route('/data', methods=[Method.GET])

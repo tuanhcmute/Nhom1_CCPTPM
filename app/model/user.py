@@ -33,3 +33,14 @@ class User(db.Model, UserMixin):
 
   def __getattribute__(self, __name):
     return super().__getattribute__(__name)
+
+  def to_dict(self):
+      return {
+        "username": self.username,
+        "email": self.email,
+        "avatar": self.avatar,
+        "age": self.age,
+        "address": self.address,
+        "fullname": self.fullname,
+        "role": self.Role.roleName
+      }

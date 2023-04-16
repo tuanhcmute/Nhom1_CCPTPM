@@ -5,7 +5,7 @@ class Role(db.Model):
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   roleName = db.Column(db.String, unique=True, nullable=False)
-  users = db.relationship('User', backref='Role')
+  users = db.relationship('User', backref='Role', lazy=True)
 
   def __init__(self, roleName):
     self.roleName = roleName

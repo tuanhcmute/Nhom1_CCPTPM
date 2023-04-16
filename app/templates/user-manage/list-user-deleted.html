@@ -23,7 +23,7 @@
           <div class="row align-items-center">
             <div class="col-md-6">
               <div class="title mb-30">
-                <h2>User Manage</h2>
+                <h2>User deleted</h2>
               </div>
             </div>
             <!-- end col -->
@@ -34,8 +34,11 @@
                     <li class="breadcrumb-item">
                       <a href="/">Dashboard</a>
                     </li>
+                    <li class="breadcrumb-item">
+                      <a href="/admin/user-manage">User manage</a>
+                    </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      User Manage
+                      Trash
                     </li>
                   </ol>
                 </nav>
@@ -52,9 +55,13 @@
               <div class="breadcrumb-wrapper">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
+                    {% if users|length != 0 %}
                     <li class="breadcrumb-item">
-                      <a href="/admin/user-manage/trash" style="font-size: 30px;"><i class="lni lni-trash-can"></i></a>
+                      <a href="#" onclick="recoveryUserDeleted()">Recovery all</i></a>
                     </li>
+                    <li class="breadcrumb-item">
+                      <a href="#" onclick="deleteAllUserDeleted()">Empty trash now</i></a>
+                      {% endif %}
                   </ol>
                 </nav>
               </div>
@@ -70,56 +77,55 @@
             <div class="col-lg-12">
               <div class="card-style mb-30">
                 <div class="table-wrapper table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th><h6></h6></th>
-                        <th><h6>Fullname</h6></th>
-                        <th><h6>Email</h6></th>
-                        <th><h6>Role</h6></th>
-                        <th><h6>Status account</h6></th>
-                        <th><h6>Action</h6></th>
-                      </tr>
-                      <!-- end table row-->
-                    </thead>
-                    <tbody>
-                      {% for user in users %}
-                       <tr>
-                        <td>
-                          <div class="employee-image">
-                            <img
-                            src="{{ user.avatar }}"alt="" />
-                          </div>
-                        </td>
-                        <td class="min-width">
-                          <p>{{user.fullname}}</p>
-                        </td>
-                        <td class="min-width">
-                          <p><a href="#0">{{user.email}}</a></p>
-                        </td>
-                        <td class="min-width">
-                          <p>{{ user.Role.roleName }}</p>
-                        </td>
-                        <td class="min-width">
-                          <span class="status-btn active-btn">Active</span>
-                        </td>
-                        <td>
-                          <div class="action">
-                            <button class="text-primary" onclick="updateUser(this)" data-userid="{{user.id}}">
-                              <i class="lni lni-pencil-alt"></i>
-                            </button>
-                            {% if user.username != request.cookies.get('username') %}
-                              <button class="text-danger" onclick="deleteUser(this)" data-userid="{{user.id}}">
-                                <i class="lni lni-trash-can"></i>
-                              </button>
-                            {% endif  %}
-                          </div>
-                        </td>
-                      </tr>
-                      {% endfor %}
-                      <!-- end table row -->
-                    </tbody>
-                  </table>
+                    {% if users|length == 0 %}
+                      <div style="text-align: center;">
+                        Trash empty
+                      </div>
+                      {% else %}
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th><h6></h6></th>
+                              <th><h6>Fullname</h6></th>
+                              <th><h6>Email</h6></th>
+                              <th><h6>Role</h6></th>
+                              <th><h6>Status account</h6></th>
+                              <th><h6>Action</h6></th>
+                            </tr>
+                            <!-- end table row-->
+                          </thead>
+                          
+                          <tbody>
+                          
+
+                            {% for user in users %}
+                            <tr>
+                              <td>
+                                <div class="employee-image">
+                                  <img
+                                  src="{{ user.avatar }}"alt="" />
+                                </div>
+                              </td>
+                              <td class="min-width">
+                                <p>{{user.fullname}}</p>
+                              </td>
+                              <td class="min-width">
+                                <p><a href="#0">{{user.email}}</a></p>
+                              </td>
+                              <td class="min-width">
+                                <p>{{ user.Role.roleName }}</p>
+                              </td>
+                              <td class="min-width">
+                                <span class="status-btn active-btn">Deleted</span>
+                              </td>
+                              <td>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                            <!-- end table row -->
+                          </tbody>
+                        </table>
+                      {% endif%}
                   <!-- end table -->
                 </div>
               </div>

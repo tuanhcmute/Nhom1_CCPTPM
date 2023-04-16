@@ -71,6 +71,7 @@ def loginPost():
         # Set cookie
         response.set_cookie('access_token', accessToken, max_age=maxAge)
         response.set_cookie('username', username)
+        response.set_cookie('role', str(role))
         return response
     else:
         error = 'Invalid username or password'
@@ -91,6 +92,7 @@ def logout():
   response = make_response(redirect('/auth/login'))
   response.delete_cookie('access_token')
   response.delete_cookie('username')
+  response.delete_cookie('role')
   logout_user()
   session.pop('message', None)
   return response

@@ -61,11 +61,6 @@ def index():
 def getProfile():
     return render_template('profile.html')
 
-
-
-
-
-
 @bp.route('/data', methods=[Method.GET])
 @login_required
 def getSampleData():

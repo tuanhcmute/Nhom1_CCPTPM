@@ -15,5 +15,7 @@ ENV FLASK_APP=app/app.py
 ENV FLASK_RUN_PORT=50000
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV SECRET_KEY=your_secret_key
+ENV MAIL_USERNAME=zzro333@gmail.com
+ENV MAIL_PASSWORD=wiibdoxuisaydfnb
 
 CMD [ "flask", "run" ]

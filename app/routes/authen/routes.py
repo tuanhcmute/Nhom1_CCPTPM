@@ -53,6 +53,12 @@ def loginPost():
       session['message'] = error
       return redirect(request.referrer)
 
+
+    if userDb.isEnable == False: 
+      error = 'Invalid username or password'
+      session['message'] = error
+      return redirect(request.referrer)
+
     
     # Create Bcrypt for Check Pass
     app = Flask(__name__)

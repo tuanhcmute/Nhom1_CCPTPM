@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import datetime
+from requests.adapters import HTTPAdapter, Retry
 
 from app.extensions import cache
 
@@ -23,8 +24,18 @@ def getData(token):
       'Content-Type': 'application/json',
       'Authorization': token
     }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    data = json.loads(response.text)
+    # response = requests.request("POST", url, headers=headers, data=payload)
+    # data = json.loads(response.text)
+    session = requests.Session()
+    retry = Retry(connect=2, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    response = session.post(url, data=payload, headers=headers, verify=False)
+
+    data = response.json()
+
     cache.set(cache_key, data)
     print('Not cache')
   else:

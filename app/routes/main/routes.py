@@ -31,7 +31,7 @@ def index():
         print('hello here')
         print(token)
         # # Get data
-        # data = getData(token)
+        data = getData(token)
         return 'hello world 1'
         # totalHO = 0
         # totalItemInHo = 0

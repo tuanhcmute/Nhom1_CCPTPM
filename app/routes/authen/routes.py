@@ -85,7 +85,7 @@ def loginPost():
         return redirect(request.referrer)
   except Exception as e:
       print('An error occurred while querying the database:', str(e))
-      error = 'An error occurred while querying the database'
+      error = str(e)
       session['message'] = error
       return redirect(request.referrer)
 

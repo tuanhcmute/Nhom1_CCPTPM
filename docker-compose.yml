@@ -22,11 +22,12 @@ services:
       POSTGRES_DB: ApiDashboardDB
       POSTGRES_PASSWORD: 1
       PGPORT: 5433
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5434:5433
     volumes:
       - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
-      - pg_data:/var/lib/postgresql/data
+      # - pg_data:/var/lib/postgresql/data
     networks:
       api-dashboard-network:
         ipv4_address: 10.5.0.5
@@ -39,7 +40,7 @@ networks:
       config:
         - subnet: 10.5.0.0/16
 
-volumes:
-  pg_data:
+# volumes:
+#   pg_data:
   
      

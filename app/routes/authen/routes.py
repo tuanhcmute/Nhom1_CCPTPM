@@ -53,6 +53,12 @@ def loginPost():
       session['message'] = error
       return redirect(request.referrer)
 
+
+    if userDb.isEnable == False: 
+      error = 'Invalid username or password'
+      session['message'] = error
+      return redirect(request.referrer)
+
     
     # Create Bcrypt for Check Pass
     app = Flask(__name__)
@@ -79,7 +85,7 @@ def loginPost():
         return redirect(request.referrer)
   except Exception as e:
       print('An error occurred while querying the database:', str(e))
-      error = 'An error occurred while querying the database'
+      error = str(e)
       session['message'] = error
       return redirect(request.referrer)
 

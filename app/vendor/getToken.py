@@ -1,6 +1,7 @@
 from flask import request
 import requests
 import json
+from requests.adapters import HTTPAdapter, Retry
 
 def getToken():
   url = "https://cads-api.fpt.vn/fiber-detection/v2/getToken"
@@ -12,8 +13,20 @@ def getToken():
   headers = {
     'Content-Type': 'application/json'
   }
-  response = requests.request("POST", url, headers=headers, data=payload)
-  return json.loads(response.text)
+
+
+  session = requests.Session()
+  retry = Retry(connect=3, backoff_factor=0.5)
+  adapter = HTTPAdapter(max_retries=retry)
+  session.mount('http://', adapter)
+  session.mount('https://', adapter)
+
+  response = session.post(url, data=payload, headers=headers, verify=False)
+
+  parsed = response.json()
+
+  return parsed
+
 
 
 def refreshToken(response):

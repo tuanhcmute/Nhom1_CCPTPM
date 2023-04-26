@@ -180,8 +180,8 @@ function recoveryUserDeleted() {
         type: 'GET',
         success: function(resultData) {
           Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
+            'Recovery trash!',
+            'Your data has been recovery.',
             'success'
           ).then(() => {
             location.reload()
@@ -211,7 +211,7 @@ function deleteAllUserDeleted() {
         success: function(resultData) {
           Swal.fire(
             'Deleted!',
-            'Your file has been deleted.',
+            'Your data has been deleted.',
             'success'
           ).then(() => {
             location.reload()

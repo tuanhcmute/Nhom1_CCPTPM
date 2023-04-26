@@ -32,7 +32,7 @@ docker rm -f container_id
 ```
 
 ### Build docker image
-docker build --tag python/api-dashboard:v1.0.0 .
+docker build --tag flask-python/api-dashboard:v1.0.0 .
 
 ### Create and run container
 ```

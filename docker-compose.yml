@@ -28,7 +28,7 @@ services:
     volumes:
       - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
       - pg_data:/var/lib/postgresql/data
-      # - pg_data:/var/lib/postgresql/data
+
     networks:
       api-dashboard-network:
         ipv4_address: 10.5.0.5
@@ -44,3 +44,4 @@ volumes:
   pg_data:
 # volumes:
 #   pg_data:
+

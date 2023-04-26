@@ -1,42 +1,46 @@
 version: '3.8'
 
 services:
-  web-container:
+  flask-container:
     image: flask-python/api-dashboard:v1.0.0
-    container_name: web-container
+    container_name: flask-container
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:1@10.5.0.5:5433/ApiDashboardDB
     ports:
       - 50001:50000
     depends_on:
-      db-container:
-        condition: service_healthy
-    # networks:
-    #   - postgres-python-network
+      - postgres-container
+    networks:
+      api-dashboard-network:
+        ipv4_address: 10.5.0.6
   
-  db-container:
-    image: postgres:14
-    restart: always
-    container_name: db-container
+  postgres-container:
+    image: postgres
+    container_name: postgres-container
     environment:
-      POSTGRES_USER: docker
-      POSTGRES_DB: web
+      POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_DB: ApiDashboardDB
       POSTGRES_PASSWORD: 1
       PGPORT: 5433
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5434:5433
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    # volumes:
-    #   - pgdata-volume:/var/lib/postgresql
+    volumes:
+      - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      - pg_data:/var/lib/postgresql/data
+      # - pg_data:/var/lib/postgresql/data
+    networks:
+      api-dashboard-network:
+        ipv4_address: 10.5.0.5
+networks:
+  api-dashboard-network:
+    name: api-dashboard-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
 
-  # networks:
-  #   postgres-python-network:
-  #     name: postgres-python-network    
-
-  # volumes:
-  #   pgdata-volume:
-  
-      
+volumes:
+  pg_data:
+# volumes:
+#   pg_data:

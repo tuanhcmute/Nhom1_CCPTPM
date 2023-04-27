@@ -2,45 +2,37 @@ version: '3.8'
 
 services:
   flask-container:
-    image: flask-python/api-dashboard:v1.0.0
+    image: doduongthaituan/api-dashboard:v1.0.0
     container_name: flask-container
     environment:
-      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:1@10.5.0.5:5433/ApiDashboardDB
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:1@postgres-container:5433/ApiDashboardDB
     ports:
       - 50001:50000
     depends_on:
       - postgres-container
     networks:
       api-dashboard-network:
-        ipv4_address: 10.5.0.6
+    volumes:
+      - app:/api-dashboard
   
   postgres-container:
-    image: postgres
+    image: doduongthaituan/my-postgres:v1.0.0
     container_name: postgres-container
     environment:
-      POSTGRES_HOST_AUTH_METHOD: md5
       POSTGRES_DB: ApiDashboardDB
       POSTGRES_PASSWORD: 1
       PGPORT: 5433
-      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5434:5433
-    volumes:
-      - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
-      # - pg_data:/var/lib/postgresql/data
     networks:
       api-dashboard-network:
-        ipv4_address: 10.5.0.5
 
 networks:
   api-dashboard-network:
     name: api-dashboard-network
     driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
 
-# volumes:
-#   pg_data:
+volumes:
+  app:
   
      

@@ -28,37 +28,34 @@ def index():
     try:
         # Get token
         token = request.cookies.get('access_token')
-        print('hello here')
-        print(token)
         # # Get data
         data = getData(token)
-        return 'hello world 1'
-        # totalHO = 0
-        # totalItemInHo = 0
-        # totalStatusOK = 0
-        # totalStatusFail = 0
+        totalHO = 0
+        totalItemInHo = 0
+        totalStatusOK = 0
+        totalStatusFail = 0
 
-        # totalHO = len(data)
-        # for keyHO in data:
-        #     childrenDict = data.get(keyHO)
-        #     totalItemInHo = totalItemInHo + len(childrenDict)
-        #     for hashKey in childrenDict:
-        #         itemDict = childrenDict[hashKey]
-        #         if itemDict['status'] == 'ok':
-        #             totalStatusOK = totalStatusOK + 1
-        #         else: 
-        #             totalStatusFail = totalStatusFail + 1
+        totalHO = len(data)
+        for keyHO in data:
+            childrenDict = data.get(keyHO)
+            totalItemInHo = totalItemInHo + len(childrenDict)
+            for hashKey in childrenDict:
+                itemDict = childrenDict[hashKey]
+                if itemDict['status'] == 'ok':
+                    totalStatusOK = totalStatusOK + 1
+                else: 
+                    totalStatusFail = totalStatusFail + 1
 
-        # username = request.cookies.get('username')
-        # return render_template('index.html', 
-        #                     username=username, 
-        #                     totalHO=totalHO, 
-        #                     totalItemInHo=totalItemInHo, 
-        #                     totalStatusOK=totalStatusOK, 
-        #                     totalStatusFail=totalStatusFail, data=data)
+        username = request.cookies.get('username')
+        return render_template('index.html', 
+                            username=username, 
+                            totalHO=totalHO, 
+                            totalItemInHo=totalItemInHo, 
+                            totalStatusOK=totalStatusOK, 
+                            totalStatusFail=totalStatusFail, data=data)
     except Exception as e:
         print(str(e))
-        return 'hello world 2'
+        return str(e)
 
 
 

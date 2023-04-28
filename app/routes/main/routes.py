@@ -28,12 +28,8 @@ def index():
     try:
         # Get token
         token = request.cookies.get('access_token')
-        print('hello here')
-        print(token)
-        # # # Get data
+        # # Get data
         data = getData(token)
-        # return 'hello world 1'
-
         totalHO = 0
         totalItemInHo = 0
         totalStatusOK = 0
@@ -59,7 +55,7 @@ def index():
                             totalStatusFail=totalStatusFail, data=data)
     except Exception as e:
         print(str(e))
-        return 'hello world 2'
+        return str(e)
 
 
 

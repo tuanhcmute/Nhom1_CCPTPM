@@ -12,7 +12,9 @@
 
 1. [Members](#members)
 2. [Overview](#overview)
-3. [How to run this project](#run-project)
+3. [How to run this project](#run-project)\
+3.1. [Manual](#manual)\
+3.2. [Using docker](#docker)
 4. [Run test case](#run-test)
 5. [Contact](#contact)
 
@@ -87,6 +89,7 @@
 ```
 
 > ## How to run this project <a name="run-project"></a>
+### Manual <a name="manual"></a>
 >
 1. [Install python 3.9 (If you don't have)](https://www.python.org/downloads/)
 
@@ -132,6 +135,21 @@ source.env
 ```
 flask run
 ```
+
+### Setup project with docker <a name="docker"></a>
+1. Clone project
+```
+git clone https://github.com/tuanhcmute/Nhom1_CCPTPM
+```
+2. Run docker-compose file
+```
+docker-compose -f ./docker-compose.yml up -d --build
+```
+3. If remove container
+```
+docker-compose -f docker-compose.yml down -v
+```
+
 
 > ## Run test case <a name="run-test"></a>
 >

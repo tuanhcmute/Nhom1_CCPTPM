@@ -18,4 +18,4 @@ ENV SECRET_KEY=your_secret_key
 ENV MAIL_USERNAME=zzro333@gmail.com
 ENV MAIL_PASSWORD=wiibdoxuisaydfnb
 
-CMD [ "flask", "run" ]
+CMD [ "flask","run"]

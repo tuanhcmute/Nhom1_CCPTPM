@@ -30,7 +30,7 @@
     // Count item
     Object.keys(dataObj).forEach(key1 => {
       Object.keys(dataObj[key1]).forEach((key2, index) => {
-          // console.log(dataObj[key1][key2])
+          //console.log(dataObj[key1][key2])
           const date = dataObj[key1][key2]['date'].slice(0, 10).trim();
           datasets = {
             ...datasets,
@@ -50,7 +50,7 @@
   }
 
   function getDataForChart4() {
-    console.log('chart 4');
+    //console.log('chart 4');
     const labels = [ ...Array(31).keys() ].map(item => {
         return item + 1 < 10 ? `2022-12-0${item + 1}` : `2022-12-${item + 1}`
       });
@@ -96,6 +96,7 @@
 
   function renderChart1() {
       const datasets = getDataForChart1AndChart2();
+      //console.log(datasets)
     // =========== chart one start
       const ctx1 = document.getElementById("Chart1").getContext("2d");
       const chart1 = new Chart(ctx1, {
@@ -314,8 +315,6 @@
         [key]: datasetsWithDate[key]
         }
       })
-
-
     const sortable = Object.entries(datasetsFilter)
     .sort(([,a],[,b]) => a['totalOk'] - b['totalOk'])
     .reduce((r, [k, v]) => 
@@ -498,10 +497,204 @@
     });
     // =========== chart four end
   }
+  function getDataForChart5(){
+    const nonIntegerNumbersMap = {};
+  
+    Object.keys(dataObj).forEach(key1 => {
+      Object.keys(dataObj[key1]).forEach((key2, index) => {
+        const predictResult = dataObj[key1][key2]['predict_result'];
+        if (Array.isArray(predictResult)) {
+          predictResult.forEach(number => {
+            if (typeof number === 'number' && !Number.isInteger(number) && number !== 1.11) {
+              if (nonIntegerNumbersMap[number]) {
+                nonIntegerNumbersMap[number]++;
+              } else {
+                nonIntegerNumbersMap[number] = 1;
+              }
+            }
+          });
+        }
+      });
+    });
+  
+    return nonIntegerNumbersMap;
+  }
+
+
+  function renderChart5() {
+    const nonIntegerNumbersMap = getDataForChart5()
+    const datasets = Object.fromEntries(
+      Object.entries(nonIntegerNumbersMap)
+        .sort((a, b) => a[0].localeCompare(b[0]))
+    );
+    var averageValueElement = document.getElementById('predict_result_value');
+    averageValueElement.innerText = Object.keys(datasets).length;
+    console.log(Object.keys(datasets));
+    var initialData = {
+        labels: Object.keys(datasets),
+        //Information about the dataset
+        datasets: [
+          {
+            label: "",
+            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Màu nền cho các cột
+            borderColor: 'rgba(255,99,132,1)', // Màu viền cho các cột
+            borderWidth: 1, // Độ dày của viền
+            data: Object.values(datasets),
+            pointBackgroundColor: "transparent",
+            pointHoverBackgroundColor: "#4A6CF7",
+            pointBorderColor: "transparent",
+            pointHoverBorderColor: "#fff",
+            pointHoverBorderWidth: 5,
+            pointBorderWidth: 5,
+            pointRadius: 8,
+            pointHoverRadius: 8,
+          },
+        ],
+      }
+    const ctx5 = document.getElementById("Chart5").getContext("2d");
+    const chart5 = new Chart(ctx5, {
+      // The type of chart we want to create
+      type: "bar", // also try bar or other graph types
+      // The data for our dataset
+      data: initialData,
+      options: {
+        onClick: function(event, elements) {
+          if (elements && elements.length > 0) {
+            var index = elements[0]._index;
+            var value = this.data.datasets[0].data[index];
+            var label = this.data.labels[index];
+            var columnCount = 0;
+            console.log('Clicked on ' + label + ' (' + value + ')');
+            // Lọc ra giá trị của cột được click
+            var newData = [value];
+            
+             // Nếu biến selectedColumn không có giá trị, hiển thị cột được click
+            if (!this.selectedColumn) {
+              this.selectedColumn = {
+                data: this.data.datasets[0].data.slice(),
+                labels: this.data.labels.slice()
+              };
+              this.data.datasets[0].data = newData;
+              this.data.labels = [label];
+            } else {
+              // Nếu biến selectedColumn có giá trị, trở về biểu đồ ban đầu
+              this.data.datasets[0].data = this.selectedColumn.data;
+              this.data.labels = this.selectedColumn.labels;
+              this.selectedColumn = null;
+            }
+            
+            // Cập nhật lại biểu đồ
+            this.update();
+            for (var i = 0; i < this.data.datasets.length; i++) {
+              columnCount += this.data.datasets[i].data.length;
+            }
+            console.log(columnCount)
+            var averageValueElement = document.getElementById('predict_result_value');
+            averageValueElement.innerText = columnCount;
+          }
+        },
+        borderColor: "#F3F6F8",
+        //borderWidth: 5,
+        backgroundColor: "#F3F6F8",
+        responsive: true,
+        tooltips: {
+          callbacks: {
+            labelColor: function (tooltipItem, chart) {
+              return {
+                backgroundColor: "rgba(104, 110, 255, .0)",
+              };
+            },
+          },
+          backgroundColor: "#F3F6F8",
+          titleFontColor: "#8F92A1",
+          titleFontSize: 12,
+          bodyFontColor: "#171717",
+          bodyFontStyle: "bold",
+          bodyFontSize: 16,
+          multiKeyBackground: "transparent",
+          displayColors: false,
+          xPadding: 10,
+          yPadding: 10,
+          bodyAlign: "center",
+          titleAlign: "center",
+        },
+
+        title: {
+          display: true,
+          text: 'Số lượng predict_result cụ thể gây ra status fail'
+        },
+        legend: {
+          display: false,
+        },
+
+        scales: {
+          yAxes: [
+            {
+              gridLines: {
+                display: false,
+                drawTicks: false,
+                drawBorder: false,
+              },
+              ticks: {
+
+                padding: 10,
+                max: 1250,
+                min: 0,
+                beginAtZero: true
+              },
+            },
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                display: true,
+                drawBorder: false,
+                color: "rgba(143, 146, 161, .1)",
+                zeroLineColor: "rgba(143, 146, 161, .1)",
+              },
+              ticks: {
+                stepSize: 1,
+                padding: 10,
+                max: 20,
+                autoSkip: false, // Không tự động bỏ qua các giá trị          
+              },
+            },
+          ],
+        },
+      },
+    });
+    // Thêm sự kiện click vào canvas
+        var canvas = document.getElementById('Chart5');
+        canvas.addEventListener('click', function(event) {
+          // Lấy tọa độ của sự kiện click
+          var x = event.clientX;
+          var y = event.clientY;
+          // Kiểm tra xem sự kiện click có nằm trong vùng biểu đồ không
+          if (x > chart5.chartArea.left && x <  chart5.chartArea.right &&
+              y > chart5.chartArea.top && y <  chart5.chartArea.bottom) {
+            // Thay đổi màu sắc của biểu đồ
+            // Lấy tất cả các dataset trong biểu đồ
+            var datasets = chart5.data.datasets;
+
+            // Thay đổi màu sắc của các dataset
+            for (var i = 0; i < datasets.length; i++) {
+              datasets[i].backgroundColor = randomColor();
+              datasets[i].borderColor =  randomColor();
+            }
+
+            // Cập nhật lại biểu đồ
+            chart5.update();
+          }
+        });
+    // =========== chart five end
+  }
+  
+
   renderChart1()
   renderChart2()
   renderChart3()
   renderChart4()
+  renderChart5()
   renderCalendar()
 
 

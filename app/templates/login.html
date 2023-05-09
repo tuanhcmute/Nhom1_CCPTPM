@@ -58,106 +58,12 @@
                         <div class="alert alert-danger">{{ session['message'] }}</div>
                       </div>
                       {% endif %}
-                      <div class="col-13">
-                        <div class="input-style-1">
-                          <label>Role</label>
-                        </div>
-                          <input type="checkbox" id="user" name="user" >
-                          <label for="user">User</label>
-                        
-                          <input type="checkbox" id="admin" name="admin" >
-                          <label for="admin">Admin</label>
-                          <script>
-                             window.addEventListener('load', function(event) {  
-                              fetch('clear_session')
-                              .then(function(response) {
-                                console.log(response);
-                              })
-                              .catch(function(error) {
-                                console.log(error);
-                              });      
-                              console.log("ok")
-        
-                            });  
-                            var userCheckbox = document.getElementById("user");
-                            var adminCheckbox = document.getElementById("admin");
-
-                            userCheckbox.addEventListener("change", function() {
-                              if (this.checked) {
-                                this.value = 1;
-                                console.log(this.value);
-                                console.log(typeof this.value);
-                                adminCheckbox.checked = false;
-                              } else{
-                                console.log(this.value);
-                                this.value = 0;
-                              }
-                            });
-
-                            adminCheckbox.addEventListener("change", function() {
-                              if (this.checked) {
-                                userCheckbox.checked = false;
-                                this.value = 2;
-                                console.log(this.value);
-                              }else{
-                                this.value = 0;
-                                console.log(this.value);
-                              }
-                            });
-
-                            var username = document.getElementById("username");
-                            var password = document.getElementById("password");
-                            var errorMsg1 = document.getElementById("errorMsg1");
-                            var errorMsg2 = document.getElementById("errorMsg2");
-
-                            username.addEventListener("blur", function() {
-                              if (username.value === "") {
-                                errorMsg1.style.display = "block";
-                              } else {
-                                errorMsg1.style.display = "none";
-                              }
-                            });  
-
-                            password.addEventListener("blur", function() {
-                              if (password.value === "") {
-                                errorMsg2.style.display = "block";
-                              } else {
-                                errorMsg2.style.display = "none";
-                              }
-                            });                           
-                          </script>
-                      </div>
-
-
-                      <!-- <div class="col-xxl-6 col-lg-12 col-md-6">
-                        <div class="form-check checkbox-style mb-30">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="checkbox-remember"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="checkbox-remember"
-                          >
-                            Remember me next time</label
-                          >
-                        </div>
-                      </div> -->
-                      <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
-                        <div
-                          class="
-                            text-start text-md-end text-lg-start text-xxl-end
-                            mb-30
-                          "
-                        >
-                          <a href="{{url_for('authen.getForgotPasswordForm')}}" class="hover-underline"
+                      <div class="col-13 mb-3">
+                        <a href="{{url_for('authen.getForgotPasswordForm')}}" class="hover-underline"
                             >Forgot Password?</a
                           >
-                        </div>
                       </div>
+                      <!-- end col -->
                       <!-- end col -->
                       <div class="col-12">
                         <div
@@ -202,4 +108,68 @@
       <!-- ========== signin-section end ========== -->
 
     </main>
+   
 {% endblock %}
+
+
+{% block script %} 
+  <script>
+      window.addEventListener('load', function(event) {  
+      fetch('clear_session')
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });      
+      console.log("ok")
+
+    });  
+    var userCheckbox = document.getElementById("user");
+    var adminCheckbox = document.getElementById("admin");
+
+    userCheckbox.addEventListener("change", function() {
+      if (this.checked) {
+        this.value = 1;
+        console.log(this.value);
+        console.log(typeof this.value);
+        adminCheckbox.checked = false;
+      } else{
+        console.log(this.value);
+        this.value = 0;
+      }
+    });
+
+    adminCheckbox.addEventListener("change", function() {
+      if (this.checked) {
+        userCheckbox.checked = false;
+        this.value = 2;
+        console.log(this.value);
+      }else{
+        this.value = 0;
+        console.log(this.value);
+      }
+    });
+
+    var username = document.getElementById("username");
+    var password = document.getElementById("password");
+    var errorMsg1 = document.getElementById("errorMsg1");
+    var errorMsg2 = document.getElementById("errorMsg2");
+
+    username.addEventListener("blur", function() {
+      if (username.value === "") {
+        errorMsg1.style.display = "block";
+      } else {
+        errorMsg1.style.display = "none";
+      }
+    });  
+
+    password.addEventListener("blur", function() {
+      if (password.value === "") {
+        errorMsg2.style.display = "block";
+      } else {
+        errorMsg2.style.display = "none";
+      }
+    });                           
+  </script>
+{% endblock %} 

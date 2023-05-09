@@ -1,6 +1,5 @@
-from flask import render_template, make_response, request, json, jsonify
+from flask import render_template, request, jsonify
 from flask_login import  login_required
-from datetime import datetime
 
 from app.routes.main import bp
 from app.utils.contants import Method
@@ -29,7 +28,7 @@ def index():
         # Get token
         token = request.cookies.get('access_token')
         # # Get data
-        data = getData(token)
+        data = getData(token, 12, 2022)
         totalHO = 0
         totalItemInHo = 0
         totalStatusOK = 0
@@ -58,6 +57,15 @@ def index():
         return str(e)
 
 
+@bp.route('/charts', methods=[Method.GET])
+@login_required
+def getChartsPage():
+    return render_template('charts.html')
+
+@bp.route('/tables', methods=[Method.GET])
+@login_required
+def getTablesPage():
+    return render_template('tables.html')
 
 @bp.route('/profile', methods=[Method.GET])
 @login_required
@@ -67,8 +75,19 @@ def getProfile():
 @bp.route('/data', methods=[Method.GET])
 @login_required
 def getSampleData():
+    # Get data
+    month = request.args.get('month')
+    year = request.args.get('year')
+    # Check data
+    if type(month) == str:
+        month = int(month)
+    if type(year) == str:
+        year = str(year)
+
     # Get token
     token = request.cookies.get('access_token')
     # Get data
-    data = getData(token)
+    data = getData(token, month=month, year=year)
+    if data is None:
+        return 'error'
     return data

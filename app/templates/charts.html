@@ -24,7 +24,7 @@
           <div class="row align-items-center">
             <div class="col-md-6">
               <div class="title mb-30">
-                <h2>Overview</h2>
+                <h2>Charts</h2>
               </div>
             </div>
             <!-- end col -->
@@ -36,7 +36,7 @@
                       <a href="/">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Overview
+                      Charts
                     </li>
                   </ol>
                 </nav>
@@ -47,7 +47,6 @@
           <!-- end row -->
         </div>
         <!-- ========== title-wrapper end ========== -->
-        {% include 'analysis/total.html' %}
         <!-- End Row -->
         <div class="row">
           <div class="col-lg-7">
@@ -55,7 +54,7 @@
               <div class="title d-flex flex-wrap justify-content-between">
                 <div class="left">
                   <h6 class="text-medium mb-10">Tổng số lượng item được dự đoán trong tháng 12/2022</h6>
-                  <h3 class="text-bold">{{ totalItemInHo }} items</h3>
+                  <h3 class="text-bold">0 items</h3>
                 </div>
                 <div class="right">
                   <div class="select-style-1">
@@ -299,7 +298,7 @@
                         <div class="text">
                           <p class="text-sm text-success d-flex gap-2">
                             <span class="text-dark">Total amount OK</span> 
-                            <span>{{ ((totalStatusOK/totalStatusFail) * 100)|round  }}%</span>
+                            <span>0%</span>
                           </p>
                           <h2>{{ totalStatusOK }} items</h2>
                         </div>
@@ -310,9 +309,9 @@
                         <span class="bg-color danger-bg"></span>
                         <div class="text">
                           <p class="text-sm text-danger d-flex gap-2">
-                            <span class="text-dark">Total amount fail </span><span> {{ 100 - ((totalStatusOK/totalStatusFail) * 100)|round }}%</span>
+                            <span class="text-dark">Total amount fail </span><span> 0%</span>
                           </p>
-                          <h2>{{ totalStatusFail }} items</h2>
+                          <h2>0 items</h2>
                         </div>
                       </div>
                     </li>

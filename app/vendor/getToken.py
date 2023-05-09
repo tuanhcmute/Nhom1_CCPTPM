@@ -14,18 +14,21 @@ def getToken():
     'Content-Type': 'application/json'
   }
 
+  response = requests.request("POST", url, headers=headers, data=payload)
+  data = json.loads(response.text)
+  return data
 
-  session = requests.Session()
-  retry = Retry(connect=3, backoff_factor=0.5)
-  adapter = HTTPAdapter(max_retries=retry)
-  session.mount('http://', adapter)
-  session.mount('https://', adapter)
+  # session = requests.Session()
+  # retry = Retry(connect=3, backoff_factor=0.5)
+  # adapter = HTTPAdapter(max_retries=retry)
+  # session.mount('http://', adapter)
+  # session.mount('https://', adapter)
 
-  response = session.post(url, data=payload, headers=headers, verify=False)
+  # response = session.post(url, data=payload, headers=headers, verify=False)
 
-  parsed = response.json()
+  # parsed = response.json()
 
-  return parsed
+  # return parsed
 
 
 

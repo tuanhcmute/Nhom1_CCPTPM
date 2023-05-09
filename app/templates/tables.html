@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+
+{% block title %}API Dashboard{% endblock %}
+
+
+{% block content %} 
+ <!-- ======== sidebar-nav start =========== -->
+    {% include 'partials/sidebar-nav.html' %}
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      {% include 'partials/header.html' %}
+      <!-- ========== header end ========== -->
+
+      <!-- ========== section start ========== -->
+
+    <section class="section">
+      <div class="container-fluid">
+        <!-- ========== title-wrapper start ========== -->
+        <div class="title-wrapper pt-30">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="title mb-30">
+                <h2>Tables</h2>
+              </div>
+            </div>
+            <!-- end col -->
+            <div class="col-md-6">
+              <div class="breadcrumb-wrapper mb-30">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Tables
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- ========== title-wrapper end ========== -->
+        <!-- End Row -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card-style mb-30">
+              <div class="title d-flex flex-wrap justify-content-between">
+                <div class="left">
+                 <div class="d-flex gap-2 mb-3 align-items-center">
+                    <h4 class="text-bold mb-10">Dữ liệu trong </h4>
+                    <input type="date" id="date" name="trip-start"
+                    value="2022-12-03"
+                        min="2018-01-01" max="2099-12-31">
+                 </div>
+                   <div class="select-style-2 d-flex gap-2">
+                    <div class="select-position select-sm">
+                      <select class="light-bg" id="key_ho">
+                        <option value="null">HO_item</option>
+                      </select>
+                    </div>
+                     <div class="select-position select-sm">
+                      <select class="light-bg" id="angle_id">
+                        <option value="null">angle_id</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                      </select>
+                    </div>
+                    <div class="select-position select-sm">
+                      <select class="light-bg" id="status">
+                        <option value="null">status</option>
+                        <option value="ok">OK</option>
+                        <option value="fail">Fail</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Title -->
+              <table class="table" id="table1">
+                <thead>
+                  <tr>
+                    <th><h6>HO</h6></th>
+                    <th><h6>angle_id</h6></th>
+                    <th><h6>status</h6></th>
+                    <th><h6>date</h6></th>
+                    <th><h6>predict_result</h6></th>
+                  </tr>
+                  <!-- end table row-->
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div id="pagination_table1"></div>
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- ========== section end ========== -->
+<!-- ========== footer start =========== -->
+{% include 'partials/footer.html' %}
+<!-- ========== footer end =========== -->
+</main>
+<!-- ======== main-wrapper end =========== -->
+{% endblock %} 
+
+{% block script %} 
+<script  type="text/javascript">
+  const app = {
+    page: 1,
+    dataObj: {},
+    renderPaginationTable1() {
+      const _that = this;
+      const totalPages = Math.ceil(Object.keys(this.dataObj).length/10);
+      $('#pagination_table1').twbsPagination({
+            totalPages,
+            visiblePages: 7,
+            onPageClick: function (event, page) {
+              console.log(page)
+              _that.page = page;
+              _that.renderTable1(_that.dataObj, _that.page);
+            }
+        });
+    },
+    async fetchData(data) {
+      const _that = this;
+      try {
+        const result = await $.ajax({
+          url: "http://localhost:50000/data",
+          type: "GET",
+          data:  data
+        });
+        return result;
+      } catch (error) {
+        console.log(error);
+        return {}
+      }
+    },
+
+    updateData(response) {
+      this.dataObj = response;
+    },
+
+    renderTable1(dataObj, page, HO_value, angleId, status) {
+      const key1s = Object.keys(dataObj);
+      let html = '';
+      let keysFilter = [...key1s];
+
+      if(HO_value && HO_value !== 'null') 
+        keysFilter = keysFilter.filter(key => key === HO_value);
+
+      keysFilter = keysFilter.slice((page - 1) * 10, page * 10);
+
+      for(const key of keysFilter) {
+        const htmlTmp = Object.keys(dataObj[key])
+        .filter(item => 
+          (angleId && angleId !== 'null') ? dataObj[key][item]['angle_id'].toString() === angleId : true) 
+        .filter(item => 
+          (status && status !== 'null') ? dataObj[key][item]['status'].toString() === status : true) 
+        .map(item => {
+          return `
+        <tr>
+                      <td class="min-width">
+                            <p>${key}</>
+                      </td>
+                      <td class="min-width">
+                        <p>${dataObj[key][item]['angle_id']}</p>
+                      </td>
+                      <td class="min-width">
+                        <p>${dataObj[key][item]['status']}</p>
+                      </td>
+                      <td class="min-width">
+                        <p>${dataObj[key][item]['date']}</p>
+                      </td>
+                        <td class="min-width">
+                          <p>${dataObj[key][item]['predict_result'].join()}</p>
+                        </td>
+                    </tr>
+          `
+        })
+        html = html + htmlTmp;
+      }
+      $('#table1 tbody').remove();
+      $('#table1').append(`<tbody>${html}</tbody>`);
+      const options = key1s.map(key => `<option value="${key}">${key}</option>`)
+      $('#key_ho').append(options)
+    },
+
+    async initDataTable1() {
+      const data = {month: 12, year: 2022};
+      const _that = this;
+      const result = await _that.fetchData(data);
+      _that.updateData(result);
+      _that.renderTable1(_that.dataObj, _that.page);
+      _that.renderPaginationTable1();
+    },
+
+    handleDataTable1() {
+      let HOValue;
+      let angleId;
+      let status;
+      const _that = this;
+      this.initDataTable1();
+      $('#date').on('change', async function() {
+        const nums = this.value.split('-')
+        const data = {
+          year: +nums[0],
+          month: +nums[1]
+        }
+        const result = await _that.fetchData(data);
+        _that.updateData(result);
+        _that.renderTable1(_that.dataObj, HOValue, angleId, status);
+      }) 
+      $('#key_ho').on('change', function() {
+        HOValue = this.value;
+        _that.renderTable1(_that.dataObj, _that.page, HOValue, angleId, status);
+      });
+      $('#angle_id').on('change', function() {
+        angleId = this.value;
+        _that.renderTable1(_that.dataObj, _that.page, HOValue, angleId, status);
+      });
+      $('#status').on('change', function() {
+        status = this.value;
+        _that.renderTable1(_that.dataObj, _that.page, HOValue, angleId, status);
+      });
+      
+    }
+  };
+
+  app.handleDataTable1();
+
+</script>
+{% endblock %} 

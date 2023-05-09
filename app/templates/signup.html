@@ -105,39 +105,7 @@
                         </div>
                       </div>
                       <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6 d-flex gap-3">
-                        <div class="form-check checkbox-style mb-30">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="user_type" 
-                            value=2
-                            id="radio-admin"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="radio-admin"
-                          >
-                            Admin</label
-                          >
-                        </div>
-                        <div class="form-check checkbox-style mb-30">
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="radio"
-                            name="user_type" 
-                            value=1 
-                            id="radio-normal"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="radio-normal"
-                          >
-                            Normal</label
-                          >
-                        </div>
-                      </div>
+                     
                       <!-- end col -->
                       <!-- end col -->
                       <div class="col-12">
@@ -162,117 +130,7 @@
                             SignUp
                           </button>
                           <input type="hidden" id="signup_success" name="signup_success" value="{{check or 'false'}}" />
-                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" integrity="sha384-/Wx1NuqlgALfa1Do1U6Mer7quEDHOo8REf/0izoIrV8Y3Z/gtEHQc01STCEMM1LZ" crossorigin="anonymous"></script>
-                          <script>
-                            window.addEventListener('load', function(event) {  
-                              fetch('clear_session')
-                              .then(function(response) {
-                                console.log(response);
-                              })
-                              .catch(function(error) {
-                                console.log(error);
-                              });      
-                              console.log("ok")
-                            });  
-                            var signup_check = document.getElementById('signup_success');
-                            var value_check = signup_check.value;
-                            if(value_check === 'true'){
-                              Swal.fire({
-                                position: 'fixed',
-                                icon: 'success',
-                                title: 'You have successfully created an account',
-                                showConfirmButton: false,
-                                timer: 3000
-                                })
-                              signup_check.value ='false'
-                            }
-
-                            var username = document.getElementById("username");
-                            var password = document.getElementById("password");
-                            var fullname = document.getElementById("fullname");
-                            var age = document.getElementById("age");
-                            var address = document.getElementById("address");
-                            var email = document.getElementById("email");
-                            var avatar= document.getElementById("avatar");
-
-                            var errorMsg1 = document.getElementById("errorMsg1");
-                            var errorMsg2 = document.getElementById("errorMsg2");
-                            var errorMsg3 = document.getElementById("errorMsg3");
-                            var errorMsg4 = document.getElementById("errorMsg4");
-                            var errorMsg5 = document.getElementById("errorMsg5");
-                            var errorMsg6 = document.getElementById("errorMsg6");
-                            var errorMsg7 = document.getElementById("errorMsg7");
-                            var errorMsg8 = document.getElementById("errorMsg8");
-
-                            username.addEventListener("blur", function() {
-                              if (username.value === "") {
-                                errorMsg1.style.display = "block";
-                              } else {
-                                errorMsg1.style.display = "none";
-                              }
-                            });  
-
-                            password.addEventListener("blur", function() {
-                              if (password.value === "") {
-                                errorMsg2.style.display = "block";
-                              } else {
-                                errorMsg2.style.display = "none";
-                              }
-                            });       
-
-                            fullname.addEventListener("blur", function() {
-                              if (fullname.value === "") {
-                                errorMsg3.style.display = "block";
-                              } else {
-                                errorMsg3.style.display = "none";
-                              }
-                            });     
-                            
-                            age.addEventListener("blur", function() {
-                              if (age.value === "") {
-                                errorMsg4.style.display = "block";
-                              } else {
-                                errorMsg4.style.display = "none";
-                              }
-                            });   
-
-                            address.addEventListener("blur", function() {
-                              if (address.value === "") {
-                                errorMsg5.style.display = "block";
-                              } else {
-                                errorMsg5.style.display = "none";
-                              }
-                            });   
-                            email.addEventListener("blur", function() {
-                              if (email.value === "") {
-                                errorMsg6.style.display = "block";
-                              } else {
-                                errorMsg6.style.display = "none";
-                              }
-                            });   
-
-                            avatar.addEventListener("blur", function() {
-                              if (avatar.value === "") {
-                                errorMsg7.style.display = "block";
-                              } else {
-                                errorMsg7.style.display = "none";
-                              }
-                            });   
-
-
-                            password.addEventListener("input", function() {
-                              if (validatePassword(password.value) || password.value === "") {
-                                errorMsg8.style.display = "none";
-                              } else {
-                                errorMsg8.style.display = "block";
-                              }
-                            });  
-
-                            function validatePassword(password) {
-                              const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;                              
-                              return regex.test(password);
-                            }
-                          </script>
+                         
                           <div class="pt-40">
                             <p class="text-sm text-medium text-dark text-center">
                               Already have an account?
@@ -295,4 +153,117 @@
       </section>
       <!-- ========== signin-section end ========== -->
     </main>
+{% endblock %}
+
+{% block script %}
+ <script>
+  window.addEventListener('load', function(event) {  
+    fetch('clear_session')
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });      
+    console.log("ok")
+  });  
+  var signup_check = document.getElementById('signup_success');
+  var value_check = signup_check.value;
+  if(value_check === 'true'){
+    Swal.fire({
+      position: 'fixed',
+      icon: 'success',
+      title: 'You have successfully created an account',
+      showConfirmButton: false,
+      timer: 3000
+      })
+    signup_check.value ='false'
+  }
+
+  var username = document.getElementById("username");
+  var password = document.getElementById("password");
+  var fullname = document.getElementById("fullname");
+  var age = document.getElementById("age");
+  var address = document.getElementById("address");
+  var email = document.getElementById("email");
+  var avatar= document.getElementById("avatar");
+
+  var errorMsg1 = document.getElementById("errorMsg1");
+  var errorMsg2 = document.getElementById("errorMsg2");
+  var errorMsg3 = document.getElementById("errorMsg3");
+  var errorMsg4 = document.getElementById("errorMsg4");
+  var errorMsg5 = document.getElementById("errorMsg5");
+  var errorMsg6 = document.getElementById("errorMsg6");
+  var errorMsg7 = document.getElementById("errorMsg7");
+  var errorMsg8 = document.getElementById("errorMsg8");
+
+  username.addEventListener("blur", function() {
+    if (username.value === "") {
+      errorMsg1.style.display = "block";
+    } else {
+      errorMsg1.style.display = "none";
+    }
+  });  
+
+  password.addEventListener("blur", function() {
+    if (password.value === "") {
+      errorMsg2.style.display = "block";
+    } else {
+      errorMsg2.style.display = "none";
+    }
+  });       
+
+  fullname.addEventListener("blur", function() {
+    if (fullname.value === "") {
+      errorMsg3.style.display = "block";
+    } else {
+      errorMsg3.style.display = "none";
+    }
+  });     
+  
+  age.addEventListener("blur", function() {
+    if (age.value === "") {
+      errorMsg4.style.display = "block";
+    } else {
+      errorMsg4.style.display = "none";
+    }
+  });   
+
+  address.addEventListener("blur", function() {
+    if (address.value === "") {
+      errorMsg5.style.display = "block";
+    } else {
+      errorMsg5.style.display = "none";
+    }
+  });   
+  email.addEventListener("blur", function() {
+    if (email.value === "") {
+      errorMsg6.style.display = "block";
+    } else {
+      errorMsg6.style.display = "none";
+    }
+  });   
+
+  avatar.addEventListener("blur", function() {
+    if (avatar.value === "") {
+      errorMsg7.style.display = "block";
+    } else {
+      errorMsg7.style.display = "none";
+    }
+  });   
+
+
+  password.addEventListener("input", function() {
+    if (validatePassword(password.value) || password.value === "") {
+      errorMsg8.style.display = "none";
+    } else {
+      errorMsg8.style.display = "block";
+    }
+  });  
+
+  function validatePassword(password) {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;                              
+    return regex.test(password);
+  }
+</script>
 {% endblock %}

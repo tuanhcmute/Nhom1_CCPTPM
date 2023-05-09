@@ -21,40 +21,27 @@ import time
 @bp.route('/login', methods=[Method.GET])
 def index():
   response = make_response()
-  response.data = 'hello world'
   return render_template('login.html')
 
 
 @bp.route('/login', methods=[Method.POST])
 def loginPost():
-  check_data = check_data_login()
-  if check_data != 'Success':
-    error = check_data
-    session['message'] = error
-    return redirect(request.referrer)
   try:
     #Get Data
     username = request.form.get('username')
     password = request.form.get('password')
-    role_user = request.form.get("user")
-    role_admin = request.form.get("admin")
-    if(role_admin is not None):
-      role = int(role_admin)
-    elif (role_user is not None):
-      role = int(role_user)
     
     #Query data
-    user = User.query.filter_by(username=username).first()
-    userDb = User.query.filter_by(username=username,roleId=role).first()
+    userDB = User.query.filter_by(username=username).first()
 
     #Check role when username and password is correct
-    if (user is not None) and (userDb is None):
+    if userDB is None:
       error = 'Access Denied'
       session['message'] = error
       return redirect(request.referrer)
 
 
-    if userDb.isEnable == False: 
+    if userDB.isEnable == False: 
       error = 'Invalid username or password'
       session['message'] = error
       return redirect(request.referrer)
@@ -64,11 +51,10 @@ def loginPost():
     app = Flask(__name__)
     csrf = CSRFProtect(app)
     bcrypt = Bcrypt(app)
-
-    if userDb and bcrypt.check_password_hash(userDb.password, password):
-        user = User(username, role, password)
-        print(user)
-        user.id = userDb.id
+    if userDB and bcrypt.check_password_hash(userDB.password, password):
+        print('Here 1')
+        user = User(userDB.roleId,username, password)
+        user.id = userDB.id
         login_user(user)
 
         response = make_response(redirect(URI.HOME))
@@ -77,7 +63,7 @@ def loginPost():
         # Set cookie
         response.set_cookie('access_token', accessToken, max_age=maxAge)
         response.set_cookie('username', username)
-        response.set_cookie('role', str(role))
+        response.set_cookie('role', str(user.roleId))
         return response
     else:
         error = 'Invalid username or password'
@@ -112,7 +98,7 @@ def getSignUpForm():
   return render_template('signup.html')
 
 @bp.route('/signup', methods=[Method.POST])
-def SignUp():
+def signUp():
   message_signup = check_user_data_signup()
   if (message_signup != 'Success'):
     error = message_signup
@@ -128,7 +114,8 @@ def SignUp():
       age = request.form.get('age')
       email = request.form.get('email')
       avatar = request.form.get('avatar')
-      role = int(request.form.get('user_type'))
+      # Default is normal user
+      role = 1
 
       #Check Strong password
       check_pass= check_password(password)
@@ -327,21 +314,6 @@ def check_user_data_signup():
     return 'Username đã tồn tại'
   if email is not None:
     return 'Email đã được sử dụng'
-  
-  return 'Success'
-
-def check_data_login():
-  # Lấy giá trị từ các trường của form
-  role_user = request.form.get("user")
-  role_admin = request.form.get("admin")
-  role = 0
-  if(role_admin is not None):
-    role = int(role_admin)
-  elif (role_user is not None):
-    role = int(role_user)
-  # Kiểm tra xem các trường này có được điền đầy đủ hay không
-  if role == 0:
-    return 'Vui lòng click vào checkbox Role'
   
   return 'Success'
 

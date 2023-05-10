@@ -2125,8 +2125,10 @@ h6,
   top: auto;
 }
 .header .header-right .profile-box .profile-info .info .image img {
-  width: 100%;
-  border-radius: 50%;
+    width: 100%;
+    border-radius: 100%;
+    object-fit: cover;
+    height: 100%;
 }
 
 /* ========== Dashboards css ================= */

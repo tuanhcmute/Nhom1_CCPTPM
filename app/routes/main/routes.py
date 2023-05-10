@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, make_response
 from flask_login import  login_required
 
 from app.routes.main import bp
@@ -75,6 +75,7 @@ def getProfile():
 @bp.route('/data', methods=[Method.GET])
 @login_required
 def getSampleData():
+    
     # Get data
     month = request.args.get('month')
     year = request.args.get('year')

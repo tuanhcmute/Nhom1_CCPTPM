@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_wtf.csrf import CSRFProtect
@@ -10,6 +11,8 @@ from app.model import *
 def createApp():
 
   app = Flask(__name__)
+  CORS(app=app)
+  # CORS(app)
   app.config['CACHE-TYPE'] = 'SimpleCache'
   cache.init_app(app)
 

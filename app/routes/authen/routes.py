@@ -52,7 +52,6 @@ def loginPost():
     csrf = CSRFProtect(app)
     bcrypt = Bcrypt(app)
     if userDB and bcrypt.check_password_hash(userDB.password, password):
-        print('Here 1')
         user = User(userDB.roleId,username, password)
         user.id = userDB.id
         login_user(user)
@@ -64,6 +63,7 @@ def loginPost():
         response.set_cookie('access_token', accessToken, max_age=maxAge)
         response.set_cookie('username', username)
         response.set_cookie('role', str(user.roleId))
+        response.set_cookie('avatar', userDB.avatar)
         return response
     else:
         error = 'Invalid username or password'
@@ -85,6 +85,7 @@ def logout():
   response.delete_cookie('access_token')
   response.delete_cookie('username')
   response.delete_cookie('role')
+  response.delete_cookie('avatar')
   logout_user()
   session.pop('message', None)
   return response

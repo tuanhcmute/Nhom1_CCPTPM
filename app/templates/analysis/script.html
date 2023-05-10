@@ -194,185 +194,6 @@
       });
       // =========== chart one end
     }
-    
-  function renderChart2() {
-      const datasets = getDataForChart1AndChart2();
-
-       const ctx2 = document.getElementById("Chart2").getContext("2d");
-      const chart2 = new Chart(ctx2, {
-        // The type of chart we want to create
-        type: "pie", // also try bar or other graph types
-
-        // The data for our dataset
-        data: {
-          labels: Object.keys(datasets),
-          // Information about the dataset
-          datasets: [
-            {
-              label: "",
-              backgroundColor: Object.keys(datasets).map(item => randomColor()),
-              data: Object.values(datasets),
-              pointBackgroundColor:'transparent',
-              pointHoverBackgroundColor: "#4A6CF7",
-              pointBorderColor: "transparent",
-              pointHoverBorderColor: "#fff",
-              pointHoverBorderWidth: 5,
-              pointBorderWidth: 5,
-              pointRadius: 8,
-              pointHoverRadius: 8,
-            },
-          ],
-        },
-
-        // Configuration options
-        defaultFontFamily: "Inter",
-        options: {
-          tooltips: {
-            callbacks: {
-              labelColor: function (tooltipItem, chart) {
-                return {
-                  backgroundColor: "#ffffff",
-                };
-              },
-            },
-            intersect: false,
-            backgroundColor: "#f9f9f9",
-            titleFontFamily: "Inter",
-            titleFontColor: "#8F92A1",
-            titleFontColor: "#8F92A1",
-            titleFontSize: 12,
-            bodyFontFamily: "Inter",
-            bodyFontColor: "#171717",
-            bodyFontStyle: "bold",
-            bodyFontSize: 16,
-            multiKeyBackground: "transparent",
-            displayColors: false,
-            xPadding: 30,
-            yPadding: 10,
-            bodyAlign: "center",
-            titleAlign: "center",
-          },
-
-          title: {
-            display: true,
-            text: 'Số lượng item được dự đoán trong 1 tháng'
-          },
-          legend: {
-            display: false,
-          },
-        },
-      });
-      // =========== chart one end
-
-      
-  }
-
-
-  function renderChart3() {
-      let datasets = {}
-      let datasetsWithDate = {}
-
-      Object.keys(dataObj).map(key1=> {
-        // datasets = {...datasets, [key1]: 0};
-        datasetsWithDate = {
-          ...datasetsWithDate, 
-          [key1]: {
-            totalOk: 0,
-            date: null
-          }
-        }
-        Object.keys(dataObj[key1]).map(key2 => {
-          if(dataObj[key1][key2]['status'] == 'ok')
-            // datasets = {...datasets, [key1]: 
-            //   datasets[key1] + 1,
-            // };
-            datasetsWithDate = {
-              ...datasetsWithDate,
-              [key1]: {
-                totalOk: datasetsWithDate[key1]['totalOk'] + 1,
-                date: dataObj[key1][key2]['date'].trim()
-              }
-            }
-        })
-      });
-
-      // let datasetsFilter = {}
-      // Object.keys(datasets).filter(key => {
-      //   return datasets[key] >= 10
-      // }).forEach(key => {
-      //   datasetsFilter =  {
-      //   ...datasetsFilter,
-      //   [key]: datasets[key]
-      //   }
-      // })
-
-      let datasetsFilter = {}
-      Object.keys(datasetsWithDate).filter(key => {
-        return datasetsWithDate[key]['totalOk'] >= 10
-      }).forEach(key => {
-        datasetsFilter =  {
-        ...datasetsFilter,
-        [key]: datasetsWithDate[key]
-        }
-      })
-    const sortable = Object.entries(datasetsFilter)
-    .sort(([,a],[,b]) => a['totalOk'] - b['totalOk'])
-    .reduce((r, [k, v]) => 
-    {
-      return { ...r, [k]: v }
-    }, {});
-
-    console.log(sortable)
-
-    const ctx3 = document.getElementById("Chart3").getContext("2d");  
-
-    const rows = Object.keys(sortable)
-      .reverse().slice(0, 10).map(key => {
-      return ` <tr>
-                      <td>
-                        <div class="check-input-primary">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            id="checkbox-1"
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div class="product">
-                          <p class="text-sm">${key}</p>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm">${sortable[key]['totalOk']} items</p>
-                      </td>
-                      <td>
-                        <p class="text-sm">${sortable[key]['date']}</p>
-                      </td>
-                      <td>
-                        <div class="action justify-content-end">
-                          <button
-                            class="more-btn ml-10 dropdown-toggle"
-                            id="moreAction1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <i class="lni lni-more-alt"></i>
-                          </button>
-                          <ul
-                            class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="moreAction1"
-                          >
-                            <li class="dropdown-item">
-                              <p class="text-gray see-more" data-ho="${key}" onclick="showDetail(event)">See more</p>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                    </tr>`
-    });
-    $('.top-selling-table tbody').append(rows)
-  }
 
   function showDetail(e) {
     const hoItemKey =e.target.dataset['ho'] 
@@ -382,19 +203,6 @@
       imageHeight: 1500,
       imageAlt: 'A tall image'
     })
-  }
-
-  function renderCalendar() {
-      document.addEventListener("DOMContentLoaded", function () {
-        var calendarMiniEl = document.getElementById("calendar-mini");
-        var calendarMini = new FullCalendar.Calendar(calendarMiniEl, {
-          initialView: "dayGridMonth",
-          headerToolbar: {
-            end: "today prev,next",
-          },
-        });
-        calendarMini.render();
-      });
   }
 
   function renderChart4() {
@@ -519,7 +327,6 @@
   
     return nonIntegerNumbersMap;
   }
-
 
   function renderChart5() {
     const nonIntegerNumbersMap = getDataForChart5()
@@ -691,11 +498,8 @@
   
 
   renderChart1()
-  renderChart2()
-  renderChart3()
   renderChart4()
   renderChart5()
-  renderCalendar()
 
 
 </script>

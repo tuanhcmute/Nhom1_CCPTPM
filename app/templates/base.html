@@ -33,6 +33,15 @@
     console.log(currentPathName)
     const a = $(`a[href="${currentPathName}"]`)
     a.addClass('active')
+    const cookies = document.cookie.split('; ');
+    const cookieUname = cookies.find(item => item.includes('username'));
+    const cookieAvtar = cookies.find(item => item.includes('avatar'));
+    if(cookieUname) {
+      $('.info h6').append(cookieUname.split('=')[1])
+    }
+    if(cookieAvtar) {
+      $('.image img').attr('src', cookieAvtar.split('=')[1])
+    }
   </script>
   {% block script %} {% endblock %} 
 </body>

@@ -54,15 +54,15 @@
               <div class="title d-flex flex-wrap justify-content-between">
                 <div class="left">
                  <div class="d-flex gap-2 mb-3 align-items-center">
-                    <h4 class="text-bold mb-10">Dữ liệu trong </h4>
+                    <h4 class="text-bold mb-10">Data in </h4>
                     <input type="date" id="date" name="trip-start"
                     value="2022-12-03"
                         min="2018-01-01" max="2099-12-31">
                  </div>
                    <div class="select-style-2 d-flex gap-2">
-                    <div class="select-position select-sm">
+                    <div class="select-position select-sm" id="select-option1">
                       <select class="light-bg" id="key_ho">
-                        <option value="null">HO_item</option>
+                        <option value="null">HO_Item</option>
                       </select>
                     </div>
                      <div class="select-position select-sm">
@@ -108,6 +108,56 @@
           <!-- End Col -->
         </div>
         <!-- End Row -->
+         <div class="row">
+          <div class="col-lg-12">
+            <div class="card-style mb-30">
+              <div class="title d-flex flex-wrap justify-content-between">
+                <div class="left">
+                 <div class="d-flex gap-2 mb-3 align-items-center">
+                    <h4 class="text-bold mb-10">Top Status </h4>
+                    <input type="date" id="date2" name="trip-start"
+                    value="2022-12-03"
+                        min="2018-01-01" max="2099-12-31">
+                 </div>
+                   <div class="select-style-2 d-flex gap-2">
+                    <div class="select-position select-sm">
+                      <select class="light-bg" id="status2">
+                        <option value="null">status</option>
+                        <option value="ok">OK</option>
+                        <option value="fail">Fail</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Title -->
+              <div class="table-responsive">
+                <table class="table top-selling-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>
+                        <h6 class="text-sm text-medium">HO Item</h6>
+                      </th>
+                      <th class="min-width">
+                        <h6 class="text-sm text-medium">Total Status</h6>
+                      </th>
+                      <th class="min-width">
+                        <h6 class="text-sm text-medium">Date created</h6>
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <!-- End Table -->
+              </div>
+            </div>
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
       </div>
       <!-- end container -->
     </section>
@@ -124,6 +174,9 @@
   const app = {
     page: 1,
     dataObj: {},
+    HOValue:  null,
+    angleId: null,
+    status: null,
     renderPaginationTable1() {
       const _that = this;
       const totalPages = Math.ceil(Object.keys(this.dataObj).length/10);
@@ -131,9 +184,9 @@
             totalPages,
             visiblePages: 7,
             onPageClick: function (event, page) {
-              console.log(page)
               _that.page = page;
               _that.renderTable1(_that.dataObj, _that.page);
+              _that.renderOptionHO(_that.dataObj, _that.page);
             }
         });
     },
@@ -143,7 +196,7 @@
         const result = await $.ajax({
           url: "http://localhost:50000/data",
           type: "GET",
-          data:  data
+          data:  data,
         });
         return result;
       } catch (error) {
@@ -163,8 +216,11 @@
 
       if(HO_value && HO_value !== 'null') 
         keysFilter = keysFilter.filter(key => key === HO_value);
+      
+      console.log({keysFilter}) 
 
       keysFilter = keysFilter.slice((page - 1) * 10, page * 10);
+      console.log({keysFilter})
 
       for(const key of keysFilter) {
         const htmlTmp = Object.keys(dataObj[key])
@@ -197,8 +253,20 @@
       }
       $('#table1 tbody').remove();
       $('#table1').append(`<tbody>${html}</tbody>`);
-      const options = key1s.map(key => `<option value="${key}">${key}</option>`)
-      $('#key_ho').append(options)
+    },
+
+    renderOptionHO(dataObj, page) {
+      const key1s = Object.keys(dataObj);
+      let keysFilter = [...key1s];
+      keysFilter = keysFilter.slice((page - 1) * 10, page * 10);
+      const options = keysFilter.map(key => `<option value="${key}">${key}</option>`)
+      $('#select-option1 #key_ho').remove();
+      $('#select-option1').append(
+        `
+        <select class="light-bg" id="key_ho">
+            <option value="null">HO_Item</option> 
+            ${options}
+        </select>`);
     },
 
     async initDataTable1() {
@@ -206,14 +274,10 @@
       const _that = this;
       const result = await _that.fetchData(data);
       _that.updateData(result);
-      _that.renderTable1(_that.dataObj, _that.page);
       _that.renderPaginationTable1();
     },
 
     handleDataTable1() {
-      let HOValue;
-      let angleId;
-      let status;
       const _that = this;
       this.initDataTable1();
       $('#date').on('change', async function() {
@@ -224,25 +288,166 @@
         }
         const result = await _that.fetchData(data);
         _that.updateData(result);
-        _that.renderTable1(_that.dataObj, HOValue, angleId, status);
+        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
+        _that.renderOptionHO(_that.dataObj, _that.page);
       }) 
-      $('#key_ho').on('change', function() {
-        HOValue = this.value;
-        _that.renderTable1(_that.dataObj, _that.page, HOValue, angleId, status);
+      $(document).on('change', '#select-option1 #key_ho', function() {
+        _that.HOValue = this.value;
+        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
       });
       $('#angle_id').on('change', function() {
-        angleId = this.value;
-        _that.renderTable1(_that.dataObj, _that.page, HOValue, angleId, status);
+        _that.angleId = this.value;
+        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
       });
       $('#status').on('change', function() {
-        status = this.value;
-        _that.renderTable1(_that.dataObj, _that.page, HOValue, angleId, status);
+        _that.status = this.value;
+        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
       });
       
     }
   };
 
+
+  const app2 = {
+    dataObj: {},
+    status: 'ok',
+
+    async fetchData(data) {
+      const _that = this;
+      try {
+        const result = await $.ajax({
+          url: "http://localhost:50000/data",
+          type: "GET",
+          data:  data,
+        });
+        return result;
+      } catch (error) {
+        console.log(error);
+        return {}
+      }
+    },
+
+    updateData(response) {
+      this.dataObj = response;
+    },
+
+    renderTable2(dataObj, status) {
+      console.log(status)
+      let datasets = {}
+      let datasetsWithDate = {}
+
+      Object.keys(dataObj).map(key1=> {
+        datasetsWithDate = {
+          ...datasetsWithDate, 
+          [key1]: {
+            totalOk: 0,
+            date: null
+          }
+        }
+        Object.keys(dataObj[key1]).map(key2 => {
+          if(dataObj[key1][key2]['status'] === status)
+            datasetsWithDate = {
+              ...datasetsWithDate,
+              [key1]: {
+                totalOk: datasetsWithDate[key1]['totalOk'] + 1,
+                date: dataObj[key1][key2]['date'].trim()
+              }
+            }
+        })
+      });
+
+      let datasetsFilter = {}
+      Object.keys(datasetsWithDate).filter(key => {
+        return datasetsWithDate[key]['totalOk'] >= 10
+      }).forEach(key => {
+        datasetsFilter =  {
+        ...datasetsFilter,
+        [key]: datasetsWithDate[key]
+        }
+      })
+    const sortable = Object.entries(datasetsFilter)
+    .sort(([,a],[,b]) => a['totalOk'] - b['totalOk'])
+    .reduce((r, [k, v]) => 
+    {
+      return { ...r, [k]: v }
+    }, {});
+
+    const rows = Object.keys(sortable)
+      .reverse().slice(0, 10).map(key => {
+      return ` <tr>
+                      <td>
+                        <div class="check-input-primary">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="checkbox-1"
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="product">
+                          <p class="text-sm">${key}</p>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-sm">${sortable[key]['totalOk']} items</p>
+                      </td>
+                      <td>
+                        <p class="text-sm">${sortable[key]['date']}</p>
+                      </td>
+                      <td>
+                        <div class="action justify-content-end">
+                          <button
+                            class="more-btn ml-10 dropdown-toggle"
+                            id="moreAction1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <i class="lni lni-more-alt"></i>
+                          </button>
+                          <ul
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="moreAction1"
+                          >
+                            <li class="dropdown-item">
+                              <p class="text-gray see-more" data-ho="${key}" onclick="showDetail(event)">See more</p>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>`
+    });
+    $('.top-selling-table tbody').remove();
+    $('.top-selling-table').append(`<tbody>${rows}</tbody>`)
+  },
+
+    async initTable2() {
+      const _that = this;
+      const result = await this.fetchData({month: 12, year: 2022});
+      this.updateData(result);
+      this.renderTable2(this.dataObj, this.status);
+      $('#status2').on('change', function() {
+        this.value === 'null' && !this.value ? _that.status= 'ok' : _that.status = this.value;
+        _that.renderTable2(_that.dataObj, _that.status);
+      });
+      $('#date2').on('change', async function() {
+        const nums = this.value.split('-')
+        const data = {
+          year: +nums[0],
+          month: +nums[1]
+        }
+        console.log(data)
+        const result = await _that.fetchData(data);
+        console.log({result})
+        _that.updateData(result);
+        _that.renderTable2(_that.dataObj, _that.status);
+      }) 
+    }
+
+  }
+
   app.handleDataTable1();
+  app2.initTable2();
 
 </script>
 {% endblock %} 

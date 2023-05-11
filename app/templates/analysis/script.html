@@ -2,7 +2,22 @@
 
   const dataString = $('.data').text().replace(/'/g, '"');
   const dataObj = JSON.parse(dataString)
+  const month = $('.month').text().replace(/'/g, '"');
+  const year= $('.year').text().replace(/'/g, '"');
+  console.log(month)
+  console.log(year)
 
+  function getMaxFormData(datasets){
+    let max = -Infinity; // Khởi tạo giá trị max là "-Vô cùng"
+    for (let key in datasets) {
+      if (datasets[key] > max) {
+        max = datasets[key];
+      }
+    }
+    //làm tròn số
+    roundedNumber = Math.ceil(max / 100) * 100;
+    return roundedNumber;
+  }
 
   function randomColor() {
     const letters = '0123456789ABCDEF';
@@ -16,8 +31,10 @@
 
   function getDataForChart1AndChart2() {
     const labels = [ ...Array(31).keys() ].map(item => {
-          return item + 1 < 10 ? `2022-12-0${item + 1}` : `2022-12-${item + 1}`
-        });
+      const day = item + 1 < 10 ? `0${item + 1}` : item + 1;
+      return `${year}-${month < 10 ? '0' + month : month}-${day}`;
+    });
+
       
     let datasets = {}
     labels.forEach(item => {
@@ -52,8 +69,9 @@
   function getDataForChart4() {
     //console.log('chart 4');
     const labels = [ ...Array(31).keys() ].map(item => {
-        return item + 1 < 10 ? `2022-12-0${item + 1}` : `2022-12-${item + 1}`
-      });
+      const day = item + 1 < 10 ? `0${item + 1}` : item + 1;
+      return `${year}-${month < 10 ? '0' + month : month}-${day}`;
+    });
       
     let datasets = {}
     labels.forEach(item => {
@@ -96,7 +114,7 @@
 
   function renderChart1() {
       const datasets = getDataForChart1AndChart2();
-      //console.log(datasets)
+      const roundedNumber = getMaxFormData(datasets);
     // =========== chart one start
       const ctx1 = document.getElementById("Chart1").getContext("2d");
       const chart1 = new Chart(ctx1, {
@@ -172,7 +190,7 @@
                 },
                 ticks: {
                   padding: 35,
-                  max: 1200,
+                  max: roundedNumber,
                   min: 0,
                 },
               },
@@ -207,6 +225,14 @@
 
   function renderChart4() {
     const datasets = getDataForChart4()
+    let max = 0;
+    Object.values(datasets).forEach(item => {
+      const currentMax = Math.max(item.ok, item.fail);
+      if (currentMax > max) {
+        max = currentMax;
+      }
+    });
+    const roundedNumber = Math.ceil(max / 100) * 100;
     const okCount = Object.keys(datasets).map(item => {
       return datasets[item]['ok'];
     })
@@ -282,7 +308,7 @@
               },
               ticks: {
                 padding: 35,
-                max: 800,
+                max: roundedNumber,
                 min: 0,
               },
             },
@@ -307,7 +333,6 @@
   }
   function getDataForChart5(){
     const nonIntegerNumbersMap = {};
-  
     Object.keys(dataObj).forEach(key1 => {
       Object.keys(dataObj[key1]).forEach((key2, index) => {
         const predictResult = dataObj[key1][key2]['predict_result'];
@@ -334,9 +359,9 @@
       Object.entries(nonIntegerNumbersMap)
         .sort((a, b) => a[0].localeCompare(b[0]))
     );
+    const roundedNumber = getMaxFormData(datasets);
     var averageValueElement = document.getElementById('predict_result_value');
     averageValueElement.innerText = Object.keys(datasets).length;
-    console.log(Object.keys(datasets));
     var initialData = {
         labels: Object.keys(datasets),
         //Information about the dataset
@@ -445,7 +470,7 @@
               ticks: {
 
                 padding: 10,
-                max: 1250,
+                max: roundedNumber,
                 min: 0,
                 beginAtZero: true
               },

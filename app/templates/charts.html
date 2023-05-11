@@ -48,12 +48,18 @@
         </div>
         <!-- ========== title-wrapper end ========== -->
         <!-- End Row -->
+        <div>
+          <h4 class="text-bold mb-10">Data in </h4>
+          <input type="date" id="date" name="trip-start"
+              value="2022-12-03"
+              min="2018-01-01" max="2099-12-31">
+        </div>
         <div class="row">
           <div class="col-lg-7">
             <div class="card-style mb-30">
               <div class="title d-flex flex-wrap justify-content-between">
                 <div class="left">
-                  <h6 class="text-medium mb-10">Tổng số lượng item được dự đoán trong tháng 12/2022</h6>
+                  <h6 class="text-medium mb-10">Tổng số lượng item được dự đoán trong tháng {{month}}/{{year}}</h6>
                   <h3 class="text-bold">0 items</h3>
                 </div>
                 <div class="right">
@@ -92,7 +98,7 @@
                 "
               >
                 <div class="left">
-                  <h6 class="text-medium mb-30">Tổng số lượng item được dự đoán trong tháng 12/2022</h6>
+                  <h6 class="text-medium mb-30">Tổng số lượng item được dự đoán trong tháng {{month}}/{{year}}</h6>
                 </div>
                 <div class="right">
                   <div class="select-style-1">
@@ -353,7 +359,7 @@
 <!-- ========== footer start =========== -->
 {% include 'partials/footer.html' %}
 <!-- ========== footer end =========== -->
-<div hidden class="data">{{ data }}</div>
+<!-- <div hidden class="data">{{ data }}</div> -->
 </main>
 <!-- ======== main-wrapper end =========== -->
 {% endblock %} 

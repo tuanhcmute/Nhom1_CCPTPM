@@ -34,6 +34,9 @@ def getData(token, month, year):
   # cache.set(cache_key, data)
   # cache.set('month', month)
   # cache.set('year', year)
-  print('Not cache')
+  if len(data) == 0:
+    print("data is null")
+  else:
+    print("data is not null")
   return data
 

@@ -7,6 +7,7 @@ from app.vendor.getToken import getToken
 from app.vendor.getData import getData
 from app.extensions import cache, db
 from app.model import *
+from datetime import datetime
 
 @bp.after_request
 @login_required
@@ -51,7 +52,7 @@ def index():
                             totalHO=totalHO, 
                             totalItemInHo=totalItemInHo, 
                             totalStatusOK=totalStatusOK, 
-                            totalStatusFail=totalStatusFail, data=data)
+                            totalStatusFail=totalStatusFail, data=data, month = 12, year = 2022)
     except Exception as e:
         print(str(e))
         return str(e)
@@ -92,3 +93,50 @@ def getSampleData():
     if data is None:
         return 'error'
     return data
+
+@bp.route('/get-data-by-date', methods=['POST'])
+@login_required
+def getDataByDate():
+    try:
+        # Lấy ngày được chọn từ yêu cầu POST
+        selected_date = request.form['date']
+        # Chuyển đổi ngày thành định dạng số để truyền vào hàm getData()
+        date_obj = datetime.strptime(selected_date, '%Y-%m-%d')
+        year = date_obj.year
+        month = date_obj.month
+        # Get token
+        token = request.cookies.get('access_token')
+        # # Get data
+        data = getData(token, month, year)
+        totalHO = 0
+        totalItemInHo = 0
+        totalStatusOK = 0
+        totalStatusFail = 0
+
+        if len(data) == 0:
+            return render_template('index.html',
+                            totalHO=None, 
+                            totalItemInHo=None, 
+                            totalStatusOK=None, 
+                            totalStatusFail=None, data=data, month = month, year = year, check = 'true')
+        totalHO = len(data)
+        for keyHO in data:
+            childrenDict = data.get(keyHO)
+            totalItemInHo = totalItemInHo + len(childrenDict)
+            for hashKey in childrenDict:
+                itemDict = childrenDict[hashKey]
+                if itemDict['status'] == 'ok':
+                    totalStatusOK = totalStatusOK + 1
+                else: 
+                    totalStatusFail = totalStatusFail + 1
+        username = request.cookies.get('username')
+        return render_template('index.html', 
+                            username=username, 
+                            totalHO=totalHO, 
+                            totalItemInHo=totalItemInHo, 
+                            totalStatusOK=totalStatusOK, 
+                            totalStatusFail=totalStatusFail, data=data, month = month, year = year)
+    except Exception as e:
+        print(str(e))
+        return str(e)
+    

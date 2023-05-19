@@ -21,6 +21,16 @@
       <div class="container-fluid">
         <!-- ========== title-wrapper start ========== -->
         <div class="title-wrapper pt-30">
+          <form method="POST" action="{{ url_for('main.getDataByDate') }}">
+            <div style="margin-bottom: 1rem;">
+              <label for="date" style="display: inline-block; font-weight: bold; margin-right: 0.5rem;">Data in:</label>
+              <input type="date" id="date" name="date" value="2022-12-03" min="2018-01-01" max="2099-12-31" style="display: inline-block; padding: 0.5rem; border-radius: 0.25rem; border: 1px solid #ccc;">
+              <button type="submit" style="display: inline-block; padding: 0.5rem; border-radius: 0.25rem; background-color: #007bff; color: #fff; border: 1px solid #007bff;">Lấy dữ liệu</button>
+            </div>
+          </form>
+          <div style="display: flex; justify-content: center; align-items: center; height: 100%; background-color: #F5F5F5; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
+            <h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-size: 48px; font-weight: bold; text-transform: uppercase; color: #555555; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); letter-spacing: 2px; text-align: center;">Data API {{month}}/{{year}}</h2>
+          </div>
           <div class="row align-items-center">
             <div class="col-md-6">
               <div class="title mb-30">
@@ -48,13 +58,14 @@
         </div>
         <!-- ========== title-wrapper end ========== -->
         {% include 'analysis/total.html' %}
+        {% if totalStatusOK is not none and totalStatusFail is not none %}
         <!-- End Row -->
         <div class="row">
           <div class="col-lg-12">
             <div class="card-style mb-30">
               <div class="title d-flex flex-wrap justify-content-between">
                 <div class="left">
-                  <h6 class="text-medium mb-10">Total number of items predicted for 12/2022</h6>
+                  <h6 class="text-medium mb-10">Total number of items predicted for {{month}}/{{year}}</h6>
                   <h3 class="text-bold">{{ totalItemInHo }} items</h3>
                 </div>
                 <div class="right">
@@ -171,6 +182,7 @@
         </div>
         <!-- End Chart -->
         <!-- End Row -->
+        {% endif %}
       </div>
       <!-- end container -->
     </section>
@@ -179,10 +191,29 @@
 {% include 'partials/footer.html' %}
 <!-- ========== footer end =========== -->
 <div hidden class="data">{{ data }}</div>
+<div hidden class="month">{{ month }}</div>
+<div hidden class="year">{{ year }}</div>
+<input type="hidden" id="check_data" name="check_data" value="{{check or 'false'}}" />
 </main>
 <!-- ======== main-wrapper end =========== -->
 {% endblock %} 
 
 {% block script %} 
   {% include 'analysis/script.html' %}
+  <script>
+    var check_data = document.getElementById('check_data');
+    var value_check = check_data.value;
+    if(value_check === 'true'){
+      Swal.fire({
+        position: 'fixed',
+        icon: 'error',
+        title: 'Data not found!!!!',
+        text: 'Something went wrong!',
+        footer: 'You can choose data again',
+        showConfirmButton: false,
+        timer: 3000
+        })
+      check_data.value ='false'
+    }
+  </script>
 {% endblock %} 

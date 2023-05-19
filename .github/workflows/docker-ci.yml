@@ -2,17 +2,18 @@ name: API Dashboard CI
 
 on:
   push:
-    branches: [production]
+    branches: [ "production" ]
 
 jobs:
   docker:
     runs-on: ubuntu-latest
+
     steps:
       #  Checkout mã nguồn từ nhánh "production" của repository.
       - name: Checkout github
         uses: actions/checkout@v2
-
-      # Đăng nhập vào Docker Hub bằng tên người dùng và mật khẩu được lưu trữ trong secrets.
+        
+     # Đăng nhập vào Docker Hub bằng tên người dùng và mật khẩu được lưu trữ trong secrets.
       - name: Login docker hub
         uses: docker/login-action@v1
         with:

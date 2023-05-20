@@ -49,27 +49,27 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script:
-            if [ -d "Nhom1_CCPTPM" ]; then
-              cd Nhom1_CCPTPM
-              git pull https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Pull completed"
-              cd ../
-            else
-              git clone https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Clone completed"
-            fi
-            cd Nhom1_CCPTPM/
-            sudo apt-get update
-            sudo apt-get install -y docker.io
-            sudo systemctl start docker
-            sudo systemctl enable docker
-            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-            sudo docker stop doduongthaituan/api-dashboard:v1.0.0 || true && sudo docker rm doduongthaituan/api-dashboard:v1.0.0 || true
-            sudo docker stop doduongthaituan/my-postgres:v1.0.0 || true && sudo docker rm doduongthaituan/my-postgres:v1.0.0 || true
-            sudo docker rmi doduongthaituan/api-dashboard -f || true
-            sudo docker rmi doduongthaituan/my-postgres || true
+#           script:
+#             if [ -d "Nhom1_CCPTPM" ]; then
+#               cd Nhom1_CCPTPM
+#               git pull https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Pull completed"
+#               cd ../
+#             else
+#               git clone https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Clone completed"
+#             fi
+#             cd Nhom1_CCPTPM/
+#             sudo apt-get update
+#             sudo apt-get install -y docker.io
+#             sudo systemctl start docker
+#             sudo systemctl enable docker
+#             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#             sudo chmod +x /usr/local/bin/docker-compose
+#             sudo docker stop doduongthaituan/api-dashboard:v1.0.0 || true && sudo docker rm doduongthaituan/api-dashboard:v1.0.0 || true
+#             sudo docker stop doduongthaituan/my-postgres:v1.0.0 || true && sudo docker rm doduongthaituan/my-postgres:v1.0.0 || true
+#             sudo docker rmi doduongthaituan/api-dashboard -f || true
+#             sudo docker rmi doduongthaituan/my-postgres || true
             
-            sudo su
-            docker-compose -f docker-compose.yml down -v
-            docker-compose -f ./docker-compose.yml up -d --build
+#             sudo su
+#             docker-compose -f docker-compose.yml down -v
+#             docker-compose -f ./docker-compose.yml up -d --build
     

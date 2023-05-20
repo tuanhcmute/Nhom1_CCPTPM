@@ -61,9 +61,6 @@ jobs:
             cd Nhom1_CCPTPM/
             sudo su
             apt-get update && apt-get upgrade -y
-            docker-compose -f docker-compose.yml down -v
-            docker rm doduongthaituan/api-dashboard:v1.0.0 -f || true
-            docker rmi doduongthaituan/api-dashboard:v1.0.0 -f || true
-            
-            docker-compose -f ./docker-compose.yml up -d --build
+            docker-compose -f ./docker-compose.yml down -v
+
     

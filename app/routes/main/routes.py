@@ -76,7 +76,6 @@ def getProfile():
 @bp.route('/data', methods=[Method.GET])
 @login_required
 def getSampleData():
-    
     # Get data
     month = request.args.get('month')
     year = request.args.get('year')

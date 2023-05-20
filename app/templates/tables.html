@@ -1,207 +1,211 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}API Dashboard{% endblock %} {% block
+content %}
+<!-- ======== sidebar-nav start =========== -->
+{% include 'partials/sidebar-nav.html' %}
+<div class="overlay"></div>
+<!-- ======== sidebar-nav end =========== -->
 
-{% block title %}API Dashboard{% endblock %}
+<!-- ======== main-wrapper start =========== -->
+<main class="main-wrapper">
+  <!-- ========== header start ========== -->
+  {% include 'partials/header.html' %}
+  <!-- ========== header end ========== -->
 
+  <!-- ========== section start ========== -->
 
-{% block content %} 
- <!-- ======== sidebar-nav start =========== -->
-    {% include 'partials/sidebar-nav.html' %}
-    <div class="overlay"></div>
-    <!-- ======== sidebar-nav end =========== -->
-
-    <!-- ======== main-wrapper start =========== -->
-    <main class="main-wrapper">
-      <!-- ========== header start ========== -->
-      {% include 'partials/header.html' %}
-      <!-- ========== header end ========== -->
-
-      <!-- ========== section start ========== -->
-
-    <section class="section">
-      <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <div class="title mb-30">
-                <h2>Tables</h2>
-              </div>
+  <section class="section">
+    <div class="container-fluid">
+      <!-- ========== title-wrapper start ========== -->
+      <div class="title-wrapper pt-30">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="title mb-30">
+              <h2>Tables</h2>
             </div>
-            <!-- end col -->
-            <div class="col-md-6">
-              <div class="breadcrumb-wrapper mb-30">
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="/">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Tables
-                    </li>
-                  </ol>
-                </nav>
-              </div>
-            </div>
-            <!-- end col -->
           </div>
-          <!-- end row -->
+          <!-- end col -->
+          <div class="col-md-6">
+            <div class="breadcrumb-wrapper mb-30">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="/">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">
+                    Tables
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          <!-- end col -->
         </div>
-        <!-- ========== title-wrapper end ========== -->
-        <!-- End Row -->
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card-style mb-30">
-              <div class="title d-flex flex-wrap justify-content-between">
-                <div class="left">
-                 <div class="d-flex gap-2 mb-3 align-items-center">
-                  <h4 class="text-bold mb-10">Data in </h4>
-                    <input type="date" id="date" name="trip-start"
+        <!-- end row -->
+      </div>
+      <!-- ========== title-wrapper end ========== -->
+      <!-- End Row -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-style mb-30">
+            <div class="title d-flex flex-wrap justify-content-between">
+              <div class="left">
+                <div class="d-flex gap-2 mb-3 align-items-center">
+                  <h4 class="text-bold mb-10">Data in</h4>
+                  <input
+                    type="date"
+                    id="date"
+                    name="trip-start"
                     value="2022-12-03"
-                        min="2018-01-01" max="2099-12-31">
-                 </div>
-                   <div class="select-style-2 d-flex gap-2">
-                    <div class="select-position select-sm" id="select-option1">
-                      <select class="light-bg" id="key_ho">
-                        <option value="null">HO_Item</option>
-                      </select>
-                    </div>
-                     <div class="select-position select-sm">
-                      <select class="light-bg" id="angle_id">
-                        <option value="null">angle_id</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                      </select>
-                    </div>
-                    <div class="select-position select-sm">
-                      <select class="light-bg" id="status">
-                        <option value="null">status</option>
-                        <option value="ok">OK</option>
-                        <option value="fail">Fail</option>
-                      </select>
-                    </div>
+                    min="2018-01-01"
+                    max="2099-12-31"
+                  />
+                </div>
+                <div class="select-style-2 d-flex gap-2">
+                  <div class="select-position select-sm" id="select-option1">
+                    <select class="light-bg" id="key_ho">
+                      <option value="null">HO_Item</option>
+                    </select>
+                  </div>
+                  <div class="select-position select-sm">
+                    <select class="light-bg" id="angle_id">
+                      <option value="null">angle_id</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                    </select>
+                  </div>
+                  <div class="select-position select-sm">
+                    <select class="light-bg" id="status">
+                      <option value="null">status</option>
+                      <option value="ok">OK</option>
+                      <option value="fail">Fail</option>
+                    </select>
                   </div>
                 </div>
               </div>
-              <!-- End Title -->
-              <table class="table" id="table1">
+            </div>
+            <!-- End Title -->
+            <table class="table" id="table1">
+              <thead>
+                <tr>
+                  <th><h6>HO</h6></th>
+                  <th><h6>angle_id</h6></th>
+                  <th><h6>status</h6></th>
+                  <th><h6>date</h6></th>
+                  <th><h6>predict_result</h6></th>
+                </tr>
+                <!-- end table row-->
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div id="pagination_table1"></div>
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-style mb-30">
+            <div class="title d-flex flex-wrap justify-content-between">
+              <div class="left">
+                <div class="d-flex gap-2 mb-3 align-items-center">
+                  <h4 class="text-bold mb-10">Top Status</h4>
+                  <input
+                    type="date"
+                    id="date2"
+                    name="trip-start"
+                    value="2022-12-03"
+                    min="2018-01-01"
+                    max="2099-12-31"
+                  />
+                </div>
+                <div class="select-style-2 d-flex gap-2">
+                  <div class="select-position select-sm">
+                    <select class="light-bg" id="status2">
+                      <option value="null">status</option>
+                      <option value="ok">OK</option>
+                      <option value="fail">Fail</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Title -->
+            <div class="table-responsive">
+              <table class="table top-selling-table">
                 <thead>
                   <tr>
-                    <th><h6>HO</h6></th>
-                    <th><h6>angle_id</h6></th>
-                    <th><h6>status</h6></th>
-                    <th><h6>date</h6></th>
-                    <th><h6>predict_result</h6></th>
+                    <th></th>
+                    <th>
+                      <h6 class="text-sm text-medium">HO Item</h6>
+                    </th>
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">Total Status</h6>
+                    </th>
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">Date created</h6>
+                    </th>
+                    <th></th>
                   </tr>
-                  <!-- end table row-->
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
               </table>
-              <div id="pagination_table1"></div>
+              <!-- End Table -->
             </div>
           </div>
-          <!-- End Col -->
         </div>
-        <!-- End Row -->
-         <div class="row">
-          <div class="col-lg-12">
-            <div class="card-style mb-30">
-              <div class="title d-flex flex-wrap justify-content-between">
-                <div class="left">
-                 <div class="d-flex gap-2 mb-3 align-items-center">
-                    <h4 class="text-bold mb-10">Top Status </h4>
-                    <input type="date" id="date2" name="trip-start"
-                    value="2022-12-03"
-                        min="2018-01-01" max="2099-12-31">
-                 </div>
-                   <div class="select-style-2 d-flex gap-2">
-                    <div class="select-position select-sm">
-                      <select class="light-bg" id="status2">
-                        <option value="null">status</option>
-                        <option value="ok">OK</option>
-                        <option value="fail">Fail</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Title -->
-              <div class="table-responsive">
-                <table class="table top-selling-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>
-                        <h6 class="text-sm text-medium">HO Item</h6>
-                      </th>
-                      <th class="min-width">
-                        <h6 class="text-sm text-medium">Total Status</h6>
-                      </th>
-                      <th class="min-width">
-                        <h6 class="text-sm text-medium">Date created</h6>
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-                <!-- End Table -->
-              </div>
-            </div>
-          </div>
-          <!-- End Col -->
-        </div>
-        <!-- End Row -->
+        <!-- End Col -->
       </div>
-      <!-- end container -->
-    </section>
-    <!-- ========== section end ========== -->
-<!-- ========== footer start =========== -->
-{% include 'partials/footer.html' %}
-<!-- ========== footer end =========== -->
+      <!-- End Row -->
+    </div>
+    <!-- end container -->
+  </section>
+  <!-- ========== section end ========== -->
+  <!-- ========== footer start =========== -->
+  {% include 'partials/footer.html' %}
+  <!-- ========== footer end =========== -->
 </main>
 <!-- ======== main-wrapper end =========== -->
-{% endblock %} 
-
-{% block script %} 
-<script  type="text/javascript">
+{% endblock %} {% block script %}
+<script type="text/javascript">
   const app = {
     page: 1,
     dataObj: {},
-    HOValue:  null,
+    HOValue: null,
     angleId: null,
     status: null,
     renderPaginationTable1() {
       const _that = this;
-      const totalPages = Math.ceil(Object.keys(this.dataObj).length/10);
-      $('#pagination_table1').twbsPagination({
-            totalPages,
-            visiblePages: 7,
-            onPageClick: function (event, page) {
-              _that.page = page;
-              _that.renderTable1(_that.dataObj, _that.page);
-              _that.renderOptionHO(_that.dataObj, _that.page);
-            }
-        });
+      const totalPages = Math.ceil(Object.keys(this.dataObj).length / 10);
+      $("#pagination_table1").twbsPagination({
+        totalPages,
+        visiblePages: 7,
+        onPageClick: function (event, page) {
+          _that.page = page;
+          _that.renderTable1(_that.dataObj, _that.page);
+          _that.renderOptionHO(_that.dataObj, _that.page);
+        },
+      });
     },
     async fetchData(data) {
       const _that = this;
+      const url = `${window.location.origin}/data`;
+      console.log(url);
       try {
         const result = await $.ajax({
-          url: "http://localhost:50000/data",
+          url: url,
           type: "GET",
-          data:  data,
+          data: data,
         });
         return result;
       } catch (error) {
         console.log(error);
-        return {}
+        return {};
       }
     },
 
@@ -211,66 +215,75 @@
 
     renderTable1(dataObj, page, HO_value, angleId, status) {
       const key1s = Object.keys(dataObj);
-      let html = '';
+      let html = "";
       let keysFilter = [...key1s];
 
-      if(HO_value && HO_value !== 'null') 
-        keysFilter = keysFilter.filter(key => key === HO_value);
-      
-      console.log({keysFilter}) 
+      if (HO_value && HO_value !== "null")
+        keysFilter = keysFilter.filter((key) => key === HO_value);
+
+      console.log({ keysFilter });
 
       keysFilter = keysFilter.slice((page - 1) * 10, page * 10);
-      console.log({keysFilter})
+      console.log({ keysFilter });
 
-      for(const key of keysFilter) {
+      for (const key of keysFilter) {
         const htmlTmp = Object.keys(dataObj[key])
-        .filter(item => 
-          (angleId && angleId !== 'null') ? dataObj[key][item]['angle_id'].toString() === angleId : true) 
-        .filter(item => 
-          (status && status !== 'null') ? dataObj[key][item]['status'].toString() === status : true) 
-        .map(item => {
-          return `
+          .filter((item) =>
+            angleId && angleId !== "null"
+              ? dataObj[key][item]["angle_id"].toString() === angleId
+              : true
+          )
+          .filter((item) =>
+            status && status !== "null"
+              ? dataObj[key][item]["status"].toString() === status
+              : true
+          )
+          .map((item) => {
+            return `
         <tr>
                       <td class="min-width">
                             <p>${key}</>
                       </td>
                       <td class="min-width">
-                        <p>${dataObj[key][item]['angle_id']}</p>
+                        <p>${dataObj[key][item]["angle_id"]}</p>
                       </td>
                       <td class="min-width">
-                        <p>${dataObj[key][item]['status']}</p>
+                        <p>${dataObj[key][item]["status"]}</p>
                       </td>
                       <td class="min-width">
-                        <p>${dataObj[key][item]['date']}</p>
+                        <p>${dataObj[key][item]["date"]}</p>
                       </td>
                         <td class="min-width">
-                          <p>${dataObj[key][item]['predict_result'].join()}</p>
+                          <p>${dataObj[key][item]["predict_result"]?.join()}</p>
                         </td>
                     </tr>
-          `
-        })
+          `;
+          });
         html = html + htmlTmp;
       }
-      $('#table1 tbody').remove();
-      $('#table1').append(`<tbody>${html}</tbody>`);
+      $("#table1 tbody").remove();
+      $("#table1").append(`<tbody>${html}</tbody>`);
     },
 
     renderOptionHO(dataObj, page) {
       const key1s = Object.keys(dataObj);
       let keysFilter = [...key1s];
       keysFilter = keysFilter.slice((page - 1) * 10, page * 10);
-      const options = keysFilter.map(key => `<option value="${key}">${key}</option>`)
-      $('#select-option1 #key_ho').remove();
-      $('#select-option1').append(
+      const options = keysFilter.map(
+        (key) => `<option value="${key}">${key}</option>`
+      );
+      $("#select-option1 #key_ho").remove();
+      $("#select-option1").append(
         `
         <select class="light-bg" id="key_ho">
-            <option value="null">HO_Item</option> 
+            <option value="null">HO_Item</option>
             ${options}
-        </select>`);
+        </select>`
+      );
     },
 
     async initDataTable1() {
-      const data = {month: 12, year: 2022};
+      const data = { month: 12, year: 2022 };
       const _that = this;
       const result = await _that.fetchData(data);
       _that.updateData(result);
@@ -280,50 +293,72 @@
     handleDataTable1() {
       const _that = this;
       this.initDataTable1();
-      $('#date').on('change', async function() {
-        const nums = this.value.split('-')
+      $("#date").on("change", async function () {
+        const nums = this.value.split("-");
         const data = {
           year: +nums[0],
-          month: +nums[1]
-        }
+          month: +nums[1],
+        };
         const result = await _that.fetchData(data);
         _that.updateData(result);
-        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
+        _that.renderTable1(
+          _that.dataObj,
+          _that.page,
+          _that.HOValue,
+          _that.angleId,
+          _that.status
+        );
         _that.renderOptionHO(_that.dataObj, _that.page);
-      }) 
-      $(document).on('change', '#select-option1 #key_ho', function() {
+      });
+      $(document).on("change", "#select-option1 #key_ho", function () {
         _that.HOValue = this.value;
-        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
+        _that.renderTable1(
+          _that.dataObj,
+          _that.page,
+          _that.HOValue,
+          _that.angleId,
+          _that.status
+        );
       });
-      $('#angle_id').on('change', function() {
+      $("#angle_id").on("change", function () {
         _that.angleId = this.value;
-        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
+        _that.renderTable1(
+          _that.dataObj,
+          _that.page,
+          _that.HOValue,
+          _that.angleId,
+          _that.status
+        );
       });
-      $('#status').on('change', function() {
+      $("#status").on("change", function () {
         _that.status = this.value;
-        _that.renderTable1(_that.dataObj, _that.page, _that.HOValue, _that.angleId, _that.status);
+        _that.renderTable1(
+          _that.dataObj,
+          _that.page,
+          _that.HOValue,
+          _that.angleId,
+          _that.status
+        );
       });
-      
-    }
+    },
   };
-
 
   const app2 = {
     dataObj: {},
-    status: 'ok',
+    status: "ok",
 
     async fetchData(data) {
       const _that = this;
       try {
         const result = await $.ajax({
-          url: "http://localhost:50000/data",
+          url: `${window.location.origin}/data`,
           type: "GET",
-          data:  data,
+          data: data,
         });
         return result;
       } catch (error) {
         console.log(error);
-        return {}
+        return {};
       }
     },
 
@@ -332,49 +367,52 @@
     },
 
     renderTable2(dataObj, status) {
-      console.log(status)
-      let datasets = {}
-      let datasetsWithDate = {}
+      console.log(status);
+      let datasets = {};
+      let datasetsWithDate = {};
 
-      Object.keys(dataObj).map(key1=> {
+      Object.keys(dataObj).map((key1) => {
         datasetsWithDate = {
-          ...datasetsWithDate, 
+          ...datasetsWithDate,
           [key1]: {
             totalOk: 0,
-            date: null
-          }
-        }
-        Object.keys(dataObj[key1]).map(key2 => {
-          if(dataObj[key1][key2]['status'] === status)
+            date: null,
+          },
+        };
+        Object.keys(dataObj[key1]).map((key2) => {
+          if (dataObj[key1][key2]["status"] === status)
             datasetsWithDate = {
               ...datasetsWithDate,
               [key1]: {
-                totalOk: datasetsWithDate[key1]['totalOk'] + 1,
-                date: dataObj[key1][key2]['date'].trim()
-              }
-            }
-        })
+                totalOk: datasetsWithDate[key1]["totalOk"] + 1,
+                date: dataObj[key1][key2]["date"].trim(),
+              },
+            };
+        });
       });
 
-      let datasetsFilter = {}
-      Object.keys(datasetsWithDate).filter(key => {
-        return datasetsWithDate[key]['totalOk'] >= 10
-      }).forEach(key => {
-        datasetsFilter =  {
-        ...datasetsFilter,
-        [key]: datasetsWithDate[key]
-        }
-      })
-    const sortable = Object.entries(datasetsFilter)
-    .sort(([,a],[,b]) => a['totalOk'] - b['totalOk'])
-    .reduce((r, [k, v]) => 
-    {
-      return { ...r, [k]: v }
-    }, {});
+      let datasetsFilter = {};
+      Object.keys(datasetsWithDate)
+        .filter((key) => {
+          return datasetsWithDate[key]["totalOk"] >= 10;
+        })
+        .forEach((key) => {
+          datasetsFilter = {
+            ...datasetsFilter,
+            [key]: datasetsWithDate[key],
+          };
+        });
+      const sortable = Object.entries(datasetsFilter)
+        .sort(([, a], [, b]) => a["totalOk"] - b["totalOk"])
+        .reduce((r, [k, v]) => {
+          return { ...r, [k]: v };
+        }, {});
 
-    const rows = Object.keys(sortable)
-      .reverse().slice(0, 10).map(key => {
-      return ` <tr>
+      const rows = Object.keys(sortable)
+        .reverse()
+        .slice(0, 10)
+        .map((key) => {
+          return ` <tr>
                       <td>
                         <div class="check-input-primary">
                           <input
@@ -390,10 +428,10 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-sm">${sortable[key]['totalOk']} items</p>
+                        <p class="text-sm">${sortable[key]["totalOk"]} items</p>
                       </td>
                       <td>
-                        <p class="text-sm">${sortable[key]['date']}</p>
+                        <p class="text-sm">${sortable[key]["date"]}</p>
                       </td>
                       <td>
                         <div class="action justify-content-end">
@@ -415,39 +453,39 @@
                           </ul>
                         </div>
                       </td>
-                    </tr>`
-    });
-    $('.top-selling-table tbody').remove();
-    $('.top-selling-table').append(`<tbody>${rows}</tbody>`)
-  },
+                    </tr>`;
+        });
+      $(".top-selling-table tbody").remove();
+      $(".top-selling-table").append(`<tbody>${rows}</tbody>`);
+    },
 
     async initTable2() {
       const _that = this;
-      const result = await this.fetchData({month: 12, year: 2022});
+      const result = await this.fetchData({ month: 12, year: 2022 });
       this.updateData(result);
       this.renderTable2(this.dataObj, this.status);
-      $('#status2').on('change', function() {
-        this.value === 'null' && !this.value ? _that.status= 'ok' : _that.status = this.value;
+      $("#status2").on("change", function () {
+        this.value === "null" && !this.value
+          ? (_that.status = "ok")
+          : (_that.status = this.value);
         _that.renderTable2(_that.dataObj, _that.status);
       });
-      $('#date2').on('change', async function() {
-        const nums = this.value.split('-')
+      $("#date2").on("change", async function () {
+        const nums = this.value.split("-");
         const data = {
           year: +nums[0],
-          month: +nums[1]
-        }
-        console.log(data)
+          month: +nums[1],
+        };
+        console.log(data);
         const result = await _that.fetchData(data);
-        console.log({result})
+        console.log({ result });
         _that.updateData(result);
         _that.renderTable2(_that.dataObj, _that.status);
-      }) 
-    }
-
-  }
+      });
+    },
+  };
 
   app.handleDataTable1();
   app2.initTable2();
-
 </script>
-{% endblock %} 
+{% endblock %}

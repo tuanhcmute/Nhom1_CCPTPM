@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script:
+          script: |
             if [ -d "Nhom1_CCPTPM" ]; then
               cd Nhom1_CCPTPM
               git pull https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Pull completed"

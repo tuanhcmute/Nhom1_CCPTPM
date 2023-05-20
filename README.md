@@ -10,13 +10,14 @@
 
 ## Table of Contents
 
-1. [Members](#members)
-2. [Overview](#overview)
-3. [How to run this project](#run-project)\
-3.1. [Manual](#manual)\
-3.2. [Using docker](#docker)
-4. [Run test case](#run-test)
-5. [Contact](#contact)
+[1. Members](#members)
+[2. Overview](#overview)
+[3. How to run this project](#run-project)\
+[3.1. Manual](#manual)\
+[3.2. Using docker](#docker)
+[4. Deploy AWS](#deploy)
+[5. Run test case](#run-test)
+[6. Contact](#contact)
 
 > ## Members :relaxed:: <a name="members"></a>
 
@@ -150,6 +151,7 @@ docker-compose -f ./docker-compose.yml up -d --build
 docker-compose -f docker-compose.yml down -v
 ```
 
+> ## Deployment <a name="deploy"></a>
 
 > ## Run test case <a name="run-test"></a>
 >

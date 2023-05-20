@@ -59,8 +59,7 @@ jobs:
               git clone https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Clone completed"
             fi
             cd Nhom1_CCPTPM/
-            sudo su
-            apt-get update && apt-get upgrade -y
-            docker-compose -f ./docker-compose.yml down -v
+            sudo apt-get update && sudo apt-get upgrade -y
+
 
     

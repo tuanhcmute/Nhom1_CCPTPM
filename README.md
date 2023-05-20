@@ -124,18 +124,16 @@ pip install -r requirements.txt
 3.4. Load all config from .env file
 
 ```
-source.env
+source .env
 ```
 
 3.5. [Download postgresQL](https://www.postgresql.org/download/) and config username password in postgresQL
 
 3.6. Open `.env` file in this project and change `DATABASE_URI=postgresql://<your_usernamw>:<your_password>@<your_host>:<your_port>/<your_database>"`
 
-3.7. Run project with command. Sever running on http://localhost:50000
+3.7. Run project with command `flask run`. Sever running on http://localhost:50000
 
-```
-flask run
-```
+3.8. Enter username = `admin` , password = `admin` to login account
 
 ### Setup project with docker <a name="docker"></a>
 1. Clone project
@@ -150,6 +148,7 @@ docker-compose -f ./docker-compose.yml up -d --build
 ```
 docker-compose -f docker-compose.yml down -v
 ```
+4. Enter username = `admin` , password = `admin` to login account
 
 > ## Deployment <a name="deploy"></a>
 ### [Hướng dẫn deploy project lên AWS](https://docs.google.com/document/d/1I9Y8f_4c7jIgiWVjytiX2aJYMQggR62gdYD3JB0gs9g/edit)

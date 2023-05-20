@@ -52,6 +52,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             if [ -d "Nhom1_CCPTPM" ]; then
+              git config --global --add safe.directory /home/Nhom1_CCPTPM
               cd Nhom1_CCPTPM
               git pull https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Pull completed"
               cd ..
@@ -61,4 +62,7 @@ jobs:
             sudo apt-get update && sudo apt-get upgrade -y
             cd Nhom1_CCPTPM
             sudo docker-compose -f ./docker-compose.yml down -v
+            sudo docker rm doduongthaituan/api-dashboard:v1.0.0 -f || true
+            sudo docker rmi doduongthaituan/api-dashboard:v1.0.0 -f || true
+            
     

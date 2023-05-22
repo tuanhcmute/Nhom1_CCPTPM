@@ -31,8 +31,8 @@ def createApp():
   # Initialize Flask extensions here if code block using testcases
   if app.config['SQLALCHEMY_DATABASE_URI'] is None:
     # Do not change code below => If you change, can not merge code
-    #app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://ubuntu:1@localhost:5432/apiDashboard"
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1abCD!@localhost:5432/testDB'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://ubuntu:1@localhost:5432/apiDashboard"
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1abCD!@localhost:5432/testDB'
   db.init_app(app)
   
   # Create table if have no table in database

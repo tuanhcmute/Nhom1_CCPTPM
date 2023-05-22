@@ -35,3 +35,5 @@ def test_sign_up_fail(client):
     with client.session_transaction() as sess:
         # Kiểm tra giá trị của session['message'] sau khi xử lý yêu cầu
         assert sess['message_signup'] == "Mật khẩu phải từ 6 đến 20 ký tự"
+
+#Test CI

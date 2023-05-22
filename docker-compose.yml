@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   flask-container:
@@ -12,9 +12,9 @@ services:
       - postgres-container
     networks:
       api-dashboard-network:
-    volumes:
-      - app:/api-dashboard
-  
+    # volumes:
+    #   - app:/api-dashboard
+
   postgres-container:
     image: doduongthaituan/my-postgres:v1.0.0
     container_name: postgres-container
@@ -31,7 +31,5 @@ networks:
   api-dashboard-network:
     name: api-dashboard-network
     driver: bridge
-
-volumes:
-  app:
-  
+# volumes:
+#   app:

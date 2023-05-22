@@ -1,0 +1,68 @@
+name: Build & Deploy API Dashboard
+
+on:
+  push:
+    branches: [ "main" ]
+
+
+jobs:
+  docker:
+    name: Build docker image
+    runs-on: ubuntu-latest
+
+    steps:
+      #  Checkout mã nguồn từ nhánh "production" của repository.
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+     # Đăng nhập vào Docker Hub bằng tên người dùng và mật khẩu được lưu trữ trong secrets.
+      - name: Login docker hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+      # Chuẩn bị Docker Buildx để thực hiện việc xây dựng hình ảnh Docker platform.
+      - name: Setup docker buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+
+      # Xây dựng và đẩy hình ảnh Docker cho thành phần client của ứng dụng API Dashboard.
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-dashboard:v1.0.0
+  
+  deploy:
+    name: Deploy to EC2
+    needs: docker
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: SSH into EC2 instance + Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            if [ -d "Nhom1_CCPTPM" ]; then
+              cd Nhom1_CCPTPM
+              git pull https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Pull completed"
+              cd ..
+            else
+              git clone https://github.com/tuanhcmute/Nhom1_CCPTPM.git && \echo "Clone completed"
+            fi
+            sudo apt-get update && sudo apt-get upgrade -y
+            cd Nhom1_CCPTPM
+            sudo docker-compose -f ./docker-compose.yml down -v
+            sudo docker rm doduongthaituan/api-dashboard:v1.0.0 -f || true
+            sudo docker rmi doduongthaituan/api-dashboard:v1.0.0 -f || true
+            sudo docker-compose -f ./docker-compose.yml up -d --build
+            
+    

@@ -295,7 +295,7 @@ def clear_session_login():
 def clear_session_signup():
   if 'message' in session:
     session.pop('message', None)
-  return redirect(url_for('authen.SignUp'))
+  return redirect(url_for('authen.signUp'))
 
 @bp.route('/clear_session')
 def clear_session():

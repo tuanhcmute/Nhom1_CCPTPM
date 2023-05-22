@@ -32,6 +32,7 @@ def createApp():
   if app.config['SQLALCHEMY_DATABASE_URI'] is None:
     # Do not change code below => If you change, can not merge code
     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://ubuntu:1@localhost:5432/apiDashboard"
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1abCD!@localhost:5432/testDB'
   db.init_app(app)
   
   # Create table if have no table in database
@@ -39,6 +40,16 @@ def createApp():
     with app.app_context():
       db.create_all()
       init_record()
+  
+  # Register blueprints
+  from app.routes.main import bp as mainBp
+  app.register_blueprint(mainBp)
+
+  from app.routes.authen import bp as authenBp
+  app.register_blueprint(authenBp, url_prefix='/auth')
+
+  from app.routes.admin.usermanage import bp as usermanage
+  app.register_blueprint(usermanage, url_prefix='/admin/user-manage')
 
   return app
 

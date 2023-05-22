@@ -23,7 +23,6 @@ def index():
   response = make_response()
   return render_template('login.html')
 
-
 @bp.route('/login', methods=[Method.POST])
 def loginPost():
   try:

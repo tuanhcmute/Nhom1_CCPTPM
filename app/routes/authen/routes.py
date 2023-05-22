@@ -22,9 +22,6 @@ import time
 def index():
   response = make_response()
   return render_template('login.html')
-@bp.route('/test', methods=[Method.GET])
-def index1():
-  return 'ok'
 
 @bp.route('/login', methods=[Method.POST])
 def loginPost():

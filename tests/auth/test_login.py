@@ -23,10 +23,11 @@ def test_login_post_deny(client):
         assert sess['message'] == 'Access Denied'
 
 def test_login_post_fail(client):
-    with client.session_transaction() as sess:
-        # Tạo mock session
-        sess['message'] = None  # Khởi tạo giá trị None cho session['message']
-    response = client.post('/auth/login', data={'username': 'admin', 'password': 'admin1'})
-    with client.session_transaction() as sess:
-        # Kiểm tra giá trị của session['message'] sau khi xử lý yêu cầu
-        assert sess['message'] == 'Invalid username or password'
+    with client:
+        with client.session_transaction() as sess:
+            # Tạo mock session
+            sess['message'] = None  # Khởi tạo giá trị None cho session['message']
+        response = client.post('/auth/login', data={'username': 'admin', 'password': 'admin1'})
+        with client.session_transaction() as sess:
+            # Kiểm tra giá trị của session['message'] sau khi xử lý yêu cầu
+            assert sess['message'] == 'Invalid username or password'

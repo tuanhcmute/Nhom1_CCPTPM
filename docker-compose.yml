@@ -26,10 +26,12 @@ services:
       - 5434:5433
     networks:
       api-dashboard-network:
+    volumes:
+    - db_data:/var/lib/postgresql/data
 
 networks:
   api-dashboard-network:
     name: api-dashboard-network
     driver: bridge
-# volumes:
-#   app:
+volumes:
+ db_data:

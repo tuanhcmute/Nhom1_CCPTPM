@@ -12,11 +12,9 @@ services:
       - postgres-container
     networks:
       api-dashboard-network:
-    # volumes:
-    #   - app:/api-dashboard
 
   postgres-container:
-    image: doduongthaituan/my-postgres:v1.0.0
+    image: postgres
     container_name: postgres-container
     environment:
       POSTGRES_DB: ApiDashboardDB
@@ -26,10 +24,12 @@ services:
       - 5434:5433
     networks:
       api-dashboard-network:
+    volumes:
+    - db_data:/var/lib/postgresql/data
 
 networks:
   api-dashboard-network:
     name: api-dashboard-network
     driver: bridge
-# volumes:
-#   app:
+volumes:
+ db_data:
